@@ -235,6 +235,8 @@ namespace PokemonGo.RocketAPI.GUI {
                 MainMap.Position = new PointLatLng(destination_latLong.results[0].geometry.location.lat, destination_latLong.results[0].geometry.location.lng);
                 boxLng.Text = Convert.ToString(destination_latLong.results[0].geometry.location.lng);
                 boxLat.Text = Convert.ToString(destination_latLong.results[0].geometry.location.lat);
+                lat = destination_latLong.results[0].geometry.location.lat;
+                lng = destination_latLong.results[0].geometry.location.lng;
             }
             catch (Exception ex) {
                 MessageBox.Show("Invalid Location!", "Error");
