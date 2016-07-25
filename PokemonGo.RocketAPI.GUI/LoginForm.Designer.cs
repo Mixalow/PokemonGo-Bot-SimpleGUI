@@ -41,6 +41,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.clearLoginTokensToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.accLogins.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -94,7 +95,7 @@
             // 
             // accLogins
             // 
-            this.accLogins.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.accLogins.BackColor = System.Drawing.SystemColors.Control;
             this.accLogins.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addAccountToolStripMenuItem});
             this.accLogins.Location = new System.Drawing.Point(0, 0);
@@ -110,6 +111,7 @@
             // 
             this.addAccountToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addAccountToolStripMenuItem1,
+            this.clearLoginTokensToolStripMenuItem,
             this.createPTCAccountToolStripMenuItem});
             this.addAccountToolStripMenuItem.Name = "addAccountToolStripMenuItem";
             this.addAccountToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
@@ -119,14 +121,14 @@
             // addAccountToolStripMenuItem1
             // 
             this.addAccountToolStripMenuItem1.Name = "addAccountToolStripMenuItem1";
-            this.addAccountToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.addAccountToolStripMenuItem1.Size = new System.Drawing.Size(182, 22);
             this.addAccountToolStripMenuItem1.Text = "Add Account";
             this.addAccountToolStripMenuItem1.Click += new System.EventHandler(this.addAccountToolStripMenuItem1_Click);
             // 
             // createPTCAccountToolStripMenuItem
             // 
             this.createPTCAccountToolStripMenuItem.Name = "createPTCAccountToolStripMenuItem";
-            this.createPTCAccountToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.createPTCAccountToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.createPTCAccountToolStripMenuItem.Text = "Create PTC Account";
             this.createPTCAccountToolStripMenuItem.Click += new System.EventHandler(this.createPTCAccountToolStripMenuItem_Click);
             // 
@@ -151,6 +153,7 @@
             this.radioButton2.TabStop = true;
             this.radioButton2.Text = "PTC";
             this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
             // 
             // radioButton1
             // 
@@ -162,6 +165,14 @@
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "Google";
             this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            // 
+            // clearLoginTokensToolStripMenuItem
+            // 
+            this.clearLoginTokensToolStripMenuItem.Name = "clearLoginTokensToolStripMenuItem";
+            this.clearLoginTokensToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.clearLoginTokensToolStripMenuItem.Text = "Clear Login Token(s)";
+            this.clearLoginTokensToolStripMenuItem.Click += new System.EventHandler(this.clearLoginTokensToolStripMenuItem_Click);
             // 
             // LoginForm
             // 
@@ -205,5 +216,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.ToolStripMenuItem clearLoginTokensToolStripMenuItem;
     }
 }

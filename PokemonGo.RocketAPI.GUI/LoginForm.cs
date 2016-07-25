@@ -61,14 +61,14 @@ namespace PokemonGo.RocketAPI.GUI
                     accInfo[j] = accInfo[j].Trim();
 
                 ToolStripMenuItem curMenuItems = new ToolStripMenuItem(accInfo[0] + " (" + accInfo[2] + ")");
-                curMenuItems.Click += (sender, eventArgs) => {
-                    boxUsername.Text = accInfo[0];
-                    boxPassword.Text = accInfo[1];
-                    auth = getLoginType(accInfo[2]);
+                curMenuItems.Click += (sender, eventArgs) => {   
                     if (auth == AuthType.Google)
                         radioButton1.Checked = true;
                     else
                         radioButton2.Checked = true;
+                    boxUsername.Text = accInfo[0];
+                    boxPassword.Text = accInfo[1];
+                    auth = getLoginType(accInfo[2]);
                     //loginSelected = true;
                     //this.Close();
                 };
@@ -78,6 +78,7 @@ namespace PokemonGo.RocketAPI.GUI
 
         private void LoginForm_Load(object sender, EventArgs e) {
             auth = (AuthType) 1337;
+            radioButton2.Checked = true;
             LoadAccounts();
         }
 
@@ -156,6 +157,26 @@ namespace PokemonGo.RocketAPI.GUI
             }
             accSub.DropDownItems.Clear();
             LoadAccounts();
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e) {
+            boxUsername.Text = "Google Login";
+            boxPassword.Text = "google";
+            boxUsername.Enabled = false;
+            boxPassword.Enabled = false;
+
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            boxUsername.Text = "";
+            boxPassword.Text = "";
+            boxUsername.Enabled = true;
+            boxPassword.Enabled = true;
+        }
+
+        private void clearLoginTokensToolStripMenuItem_Click(object sender, EventArgs e) {
+            UserSettings.Default.GoogleRefreshToken = "";
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Globalization;
 using System.IO;
 using PokemonGo.RocketAPI.Logging;
 
@@ -34,12 +35,12 @@ namespace PokemonGo.RocketAPI
         /// <param name="message">The message to log.</param>
         /// <param name="level">Optional level to log. Default <see cref="LogLevel.Info" />.</param>
         /// <param name="color">Optional. Default is automatic color.</param>
-        public static void Write(string message, LogLevel level = LogLevel.Info, ConsoleColor color = ConsoleColor.Black)
+        public static void Write(string message, LogLevel level = LogLevel.Info, ConsoleColor color = ConsoleColor.White)
         {
             if (_logger == null)
                 return;
             _logger.Write(message, level, color);
-            Log(string.Concat($"[{DateTime.Now.ToString("HH:mm:ss")}] ", message));
+            Log("[ " + DateTime.Now.ToString("hh:mm:ss") + " " + DateTime.Now.ToString("tt") + " ] " + message);
         }
 
         private static void Log(string message)

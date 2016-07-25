@@ -18,6 +18,7 @@ using System.IO;
 using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
+using PokemonGo.RocketAPI.Login;
 
 namespace PokemonGo.RocketAPI.GUI
 {
@@ -76,6 +77,7 @@ namespace PokemonGo.RocketAPI.GUI
         {
             // Display Position Selector
             if (loginSelected) {
+                botPaused = true;
                 LocationSelector locationSelect = new LocationSelector();
                 locationSelect.ShowDialog();
 
@@ -93,6 +95,7 @@ namespace PokemonGo.RocketAPI.GUI
                     // Close the Location Window
                     locationSelect.Close();
                     initializeMap();
+                    botPaused = false;
                 }
                 catch {
                     MessageBox.Show("Please Select A Starting Point!", "Error");
@@ -153,10 +156,10 @@ namespace PokemonGo.RocketAPI.GUI
                 this.settings = new Settings();
 
                 // Begin Login
-                Logger.Write("Trying to Login with Google Token...");
                 Client client = new Client(this.settings);
                 await client.DoGoogleLogin();
                 await client.SetServer();
+                Logger.Write("Logged In With Google Token /" + settings.GoogleRefreshToken);
 
                 // Server Ready
                 Logger.Write("Connected! Server is Ready.");
@@ -220,7 +223,7 @@ namespace PokemonGo.RocketAPI.GUI
             cbKeepPkToEvolve.Enabled = true;
             button1.Enabled = true;
 
-            Logger.Write("Ready to Work.");
+            //Logger.Write("Ready to Work.");
         }
 
         private async Task<bool> preflightCheck()
@@ -236,15 +239,15 @@ namespace PokemonGo.RocketAPI.GUI
             // Checker for Inventory
             if (myItems.Select(i => i.Count).Sum() >= 350)
             {
-                Logger.Write("Unable to Start Farming: You need to have free space for Items.");
-                return false;
+                Logger.Write("Item Overflow Detected - Cleaning");
+                btnRecycleItems_Click(null, null);
             }
 
             // Checker for Pokemons
             if (myPokemons.Count() >= 241) // Eggs are Included in the total count (9/9)
             {
-                Logger.Write("Unable to Start Farming: You need to have free space for Pokemons.");
-                return false;
+                Logger.Write("Pokemon Overflow Detected - Cleaning");
+                btnTransferDuplicates_Click(null, null);
             }
 
             // Ready to Fly
@@ -265,10 +268,10 @@ namespace PokemonGo.RocketAPI.GUI
 
             // Disable Button
             btnStartFarming.Enabled = false;
-            btnEvolvePokemons.Enabled = false;
-            btnRecycleItems.Enabled = false;
-            btnTransferDuplicates.Enabled = false;
-            cbKeepPkToEvolve.Enabled = false;
+            //btnEvolvePokemons.Enabled = false;
+            //btnRecycleItems.Enabled = false;
+            //btnTransferDuplicates.Enabled = false;
+            //cbKeepPkToEvolve.Enabled = false;
             //lbCanEvolveCont.Enabled = false;
             //button1.Enabled = false;
 
@@ -277,6 +280,7 @@ namespace PokemonGo.RocketAPI.GUI
 
             // Setup the Timer
             isFarmingActive = true;
+            botPaused = false;
             setUpTimer();
             startBottingSession();
 
@@ -294,10 +298,10 @@ namespace PokemonGo.RocketAPI.GUI
         {
             // Disable Button
             btnStartFarming.Enabled = true;
-            btnEvolvePokemons.Enabled = true;
-            btnRecycleItems.Enabled = true;
-            btnTransferDuplicates.Enabled = true;
-            cbKeepPkToEvolve.Enabled = true;
+            //btnEvolvePokemons.Enabled = true;
+           // btnRecycleItems.Enabled = true;
+           // btnTransferDuplicates.Enabled = true;
+            //cbKeepPkToEvolve.Enabled = true;
             //lbCanEvolveCont.Enabled = true;
             button1.Enabled = true;
 
@@ -388,38 +392,39 @@ namespace PokemonGo.RocketAPI.GUI
             return $"Pkmn/Hr: {pkmnPerHour:0.0}";
         }
 
+        bool botPaused = false;
         private async void startBottingSession()
         {
             // Setup the Timer
-            sessionTimer.Interval = 2000;
+            sessionTimer.Interval = 1000;
             sessionTimer.Start();
             sessionStartTime = DateTime.Now;
 
             // Loop Until we Manually Stop
             while(isFarmingActive)
             {
-                try
-                {
-                    // Start Farming Pokestops/Pokemons.
-                    await ExecuteFarmingPokestopsAndPokemons();
+                if (!botPaused) {
+                    try {
+                        // Start Farming Pokestops/Pokemons.
+                        await ExecuteFarmingPokestopsAndPokemons();
 
-                    // Evolve Pokemons.
-                    //btnEvolvePokemons_Click(null, null);
-                    //System.Threading.Thread.Sleep(10000);
+                        // Evolve Pokemons.
+                        //btnEvolvePokemons_Click(null, null);
+                        //System.Threading.Thread.Sleep(10000);
 
-                    // Transfer Duplicates.
-                    //btnTransferDuplicates_Click(null, null);
-                    System.Threading.Thread.Sleep(100);
-                }
-                catch (Exception ex)
-                {
-                    Logger.Write("InvalidResponseException - Reconnecting Bot (Please Wait...)");
-                    //createCrashLog(ex);
-                    System.Threading.Thread.Sleep(1000);
-                    if (sAType == AuthType.Ptc)
-                        await loginPtc(loginDetails[0], loginDetails[1]);
-                    if (sAType == AuthType.Google)
-                        await loginGoogle();
+                        // Transfer Duplicates.
+                        //btnTransferDuplicates_Click(null, null);
+                        System.Threading.Thread.Sleep(100);
+                    }
+                    catch (Exception ex) {
+                        Logger.Write("InvalidResponseException - Reconnecting Bot (Please Wait...)");
+                        //createCrashLog(ex);
+                        System.Threading.Thread.Sleep(1000);
+                        if (sAType == AuthType.Ptc)
+                            await loginPtc(loginDetails[0], loginDetails[1]);
+                        if (sAType == AuthType.Google)
+                            await loginGoogle();
+                    }
                 }
             }           
         }
@@ -449,6 +454,8 @@ namespace PokemonGo.RocketAPI.GUI
             boxPokestopName.Clear();
             boxPokestopInit.Clear();
             boxPokestopCount.Clear();
+
+            Logger.Write("Bot Stopped! - Please Allow Pending Tasks To Complete");
 
             //MessageBox.Show("Please allow a few seconds for the pending tasks to complete.");
         }
@@ -572,8 +579,8 @@ namespace PokemonGo.RocketAPI.GUI
         private async Task EvolveAllPokemonWithEnoughCandy()
         {
             // Logging
-            Logger.Write("Selecting Pokemons available for Evolution.");
-
+            //Logger.Write("Selecting Pokemons available for Evolution.");
+            botPaused = true;
             var pokemonToEvolve = await inventory.GetPokemonToEvolve();
             foreach (var pokemon in pokemonToEvolve)
             {
@@ -593,18 +600,19 @@ namespace PokemonGo.RocketAPI.GUI
                 }
 
                 await GetCurrentPlayerInformation();
-                await Task.Delay(3000);
+                await Task.Delay(100);
             }
 
             // Logging
-            Logger.Write("Finished Evolving Pokemons.");
+            Logger.Write("Finished Evolving Pokemon(s).");
+            botPaused = false;
         }
 
         private async Task TransferDuplicatePokemon(bool keepPokemonsThatCanEvolve = false)
         {
             // Logging
-            Logger.Write("Selecting Pokemons available for Transfer.");
-
+            Logger.Write("Transferring Duplicate Pokemon(s).");
+            botPaused = true;
             var duplicatePokemons = await inventory.GetDuplicatePokemonToTransfer(keepPokemonsThatCanEvolve);
 
             foreach (var duplicatePokemon in duplicatePokemons)
@@ -616,11 +624,12 @@ namespace PokemonGo.RocketAPI.GUI
                 dGrid.Rows.Insert(0, "Transferred", duplicatePokemon.PokemonId.ToString(), duplicatePokemon.Cp);
 
                 await GetCurrentPlayerInformation();
-                await Task.Delay(500);
+                await Task.Delay(100);
             }
 
             // Logging
-            Logger.Write("Finished Transfering Pokemons.");
+            Logger.Write("Finished Transfering Pokemon(s).");
+            botPaused = false;
         }
 
         private async Task RecycleItems()
@@ -628,7 +637,8 @@ namespace PokemonGo.RocketAPI.GUI
             try
             {
                 // Logging
-                Logger.Write("Recycling Items to Free Space");
+                botPaused = true;
+                Logger.Write("Recylcing Items!");
 
                 var items = await inventory.GetItemsToRecycle(this.settings);
 
@@ -640,18 +650,20 @@ namespace PokemonGo.RocketAPI.GUI
                     // GUI Experience
                     dGrid.Rows.Insert(0, "Recycled", item.Count, ((ItemId)item.Item_).ToString());
 
-                    await Task.Delay(500);
+                    await Task.Delay(100);
                 }
 
 
                 // Logging
+                botPaused = false;
                 Logger.Write("Recycling Complete.");
             }
             catch (Exception ex)
             {
                 Logger.Write($"Error Details: {ex.Message}");
                 Logger.Write("Unable to Complete Items Recycling.");
-            }            
+            }
+            botPaused = false;
         }
 
         private async Task<MiscEnums.Item> GetBestBall(int? pokemonCp)
@@ -702,6 +714,7 @@ namespace PokemonGo.RocketAPI.GUI
             await Task.Delay(3000);
         }
 
+        bool locationChanged = false;
         private async Task ExecuteFarmingPokestopsAndPokemons()
         {
             var mapObjects = await client.GetMapObjects();
@@ -720,28 +733,30 @@ namespace PokemonGo.RocketAPI.GUI
                 boxPokestopName.Text = fortInfo.Name.ToString();
                 boxPokestopInit.Text = count.ToString();
                 boxPokestopCount.Text = pokestopsCount.ToString();
-                count++;                               
-
+                count++;
+          
                 var fortSearch = await client.SearchFort(pokeStop.Id, pokeStop.Latitude, pokeStop.Longitude);
-
-                Logger.Write($"Loot -> Gems: { fortSearch.GemsAwarded}, Eggs: {fortSearch.PokemonDataEgg} Items: {StringUtils.GetSummedFriendlyNameOfItemAwardList(fortSearch.ItemsAwarded)}", LogLevel.Info);
-                Logger.Write("Gained " + fortSearch.ExperienceAwarded + " XP.");
+                Logger.Write($"Pokestop - XP: { fortSearch.ExperienceAwarded} Gems: { fortSearch.GemsAwarded}, Eggs: {fortSearch.PokemonDataEgg} Items: {StringUtils.GetSummedFriendlyNameOfItemAwardList(fortSearch.ItemsAwarded)}", LogLevel.Info);
 
                 // Experience Counter
                 totalExperience += fortSearch.ExperienceAwarded;
 
                 await GetCurrentPlayerInformation();
-                Logger.Write("Attempting to Capture Nearby Pokemons.");
+                //Logger.Write("Attempting to Capture Nearby Pokemons.");
                 await ExecuteCatchAllNearbyPokemons();
 
                 if (!isFarmingActive)
                 {
-                    Logger.Write("Stopping Farming Pokestops.");
+                    //Logger.Write("Stopping Farming Pokestops.");
                     return;
                 }                    
 
-                Logger.Write("Waiting 2 seconds before moving to the next Pokestop.");
-                await Task.Delay(2000);
+                //Logger.Write("Waiting 2 seconds before moving to the next Pokestop.");
+                if (locationChanged) {
+                    locationChanged = false;
+                    break;
+                }
+                await Task.Delay(1000);
             }
         }
 
@@ -751,7 +766,7 @@ namespace PokemonGo.RocketAPI.GUI
 
             var pokemons = mapObjects.MapCells.SelectMany(i => i.CatchablePokemons);
 
-            Logger.Write("Found " + pokemons.Count<MapPokemon>() + " Pokemons in the area.");
+            //Logger.Write("Found " + pokemons.Count<MapPokemon>() + " Pokemons in the area.");
             foreach (var pokemon in pokemons)
             {   
                 var update = await client.UpdatePlayerLocation(pokemon.Latitude, pokemon.Longitude, settings.DefaultAltitude);
@@ -808,17 +823,17 @@ namespace PokemonGo.RocketAPI.GUI
 
                 if (!isFarmingActive)
                 {
-                    Logger.Write("Stopping Farming Pokemons.");
+                    //Logger.Write("Stopping Farming Pokemons.");
                     return;
                 }
 
-                Logger.Write("Waiting 2 seconds before moving to the next Pokemon.");
+                //Logger.Write("Waiting 2 seconds before moving to the next Pokemon.");
                 await Task.Delay(2000);
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
+        private void button1_Click(object sender, EventArgs e) {
+            locationChanged = true;
             displayPositionSelector();
         }
 

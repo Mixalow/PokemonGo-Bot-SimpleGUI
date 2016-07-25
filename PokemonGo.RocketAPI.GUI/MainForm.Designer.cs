@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.lbCanEvolveCont = new System.Windows.Forms.Label();
             this.cbKeepPkToEvolve = new System.Windows.Forms.CheckBox();
             this.btnRecycleItems = new System.Windows.Forms.Button();
             this.btnTransferDuplicates = new System.Windows.Forms.Button();
@@ -85,7 +84,6 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Controls.Add(this.lbCanEvolveCont);
             this.groupBox1.Controls.Add(this.cbKeepPkToEvolve);
             this.groupBox1.Controls.Add(this.btnRecycleItems);
             this.groupBox1.Controls.Add(this.btnTransferDuplicates);
@@ -102,22 +100,13 @@
             // button1
             // 
             this.button1.Enabled = false;
-            this.button1.Location = new System.Drawing.Point(6, 277);
+            this.button1.Location = new System.Drawing.Point(6, 293);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(144, 46);
+            this.button1.Size = new System.Drawing.Size(144, 35);
             this.button1.TabIndex = 7;
             this.button1.Text = "Change Location";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // lbCanEvolveCont
-            // 
-            this.lbCanEvolveCont.AutoSize = true;
-            this.lbCanEvolveCont.Location = new System.Drawing.Point(28, 199);
-            this.lbCanEvolveCont.Name = "lbCanEvolveCont";
-            this.lbCanEvolveCont.Size = new System.Drawing.Size(61, 13);
-            this.lbCanEvolveCont.TabIndex = 6;
-            this.lbCanEvolveCont.Text = "can Evolve";
             // 
             // cbKeepPkToEvolve
             // 
@@ -125,19 +114,19 @@
             this.cbKeepPkToEvolve.Checked = true;
             this.cbKeepPkToEvolve.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbKeepPkToEvolve.Enabled = false;
-            this.cbKeepPkToEvolve.Location = new System.Drawing.Point(9, 186);
+            this.cbKeepPkToEvolve.Location = new System.Drawing.Point(6, 227);
             this.cbKeepPkToEvolve.Name = "cbKeepPkToEvolve";
-            this.cbKeepPkToEvolve.Size = new System.Drawing.Size(125, 17);
+            this.cbKeepPkToEvolve.Size = new System.Drawing.Size(149, 17);
             this.cbKeepPkToEvolve.TabIndex = 5;
-            this.cbKeepPkToEvolve.Text = "Keep Pokemons that";
+            this.cbKeepPkToEvolve.Text = "Keep Evolvable Pokemon";
             this.cbKeepPkToEvolve.UseVisualStyleBackColor = true;
             // 
             // btnRecycleItems
             // 
             this.btnRecycleItems.Enabled = false;
-            this.btnRecycleItems.Location = new System.Drawing.Point(6, 225);
+            this.btnRecycleItems.Location = new System.Drawing.Point(6, 250);
             this.btnRecycleItems.Name = "btnRecycleItems";
-            this.btnRecycleItems.Size = new System.Drawing.Size(144, 46);
+            this.btnRecycleItems.Size = new System.Drawing.Size(144, 37);
             this.btnRecycleItems.TabIndex = 4;
             this.btnRecycleItems.Text = "Recycle Items";
             this.btnRecycleItems.UseVisualStyleBackColor = true;
@@ -146,9 +135,9 @@
             // btnTransferDuplicates
             // 
             this.btnTransferDuplicates.Enabled = false;
-            this.btnTransferDuplicates.Location = new System.Drawing.Point(6, 139);
+            this.btnTransferDuplicates.Location = new System.Drawing.Point(6, 185);
             this.btnTransferDuplicates.Name = "btnTransferDuplicates";
-            this.btnTransferDuplicates.Size = new System.Drawing.Size(144, 46);
+            this.btnTransferDuplicates.Size = new System.Drawing.Size(144, 36);
             this.btnTransferDuplicates.TabIndex = 3;
             this.btnTransferDuplicates.Text = "Transfer Duplicate Pokemons";
             this.btnTransferDuplicates.UseVisualStyleBackColor = true;
@@ -157,9 +146,9 @@
             // btnEvolvePokemons
             // 
             this.btnEvolvePokemons.Enabled = false;
-            this.btnEvolvePokemons.Location = new System.Drawing.Point(6, 87);
+            this.btnEvolvePokemons.Location = new System.Drawing.Point(6, 142);
             this.btnEvolvePokemons.Name = "btnEvolvePokemons";
-            this.btnEvolvePokemons.Size = new System.Drawing.Size(144, 46);
+            this.btnEvolvePokemons.Size = new System.Drawing.Size(144, 37);
             this.btnEvolvePokemons.TabIndex = 2;
             this.btnEvolvePokemons.Text = "Evolve Pokemons w/Candy";
             this.btnEvolvePokemons.UseVisualStyleBackColor = true;
@@ -168,9 +157,9 @@
             // btnStopFarming
             // 
             this.btnStopFarming.Enabled = false;
-            this.btnStopFarming.Location = new System.Drawing.Point(6, 48);
+            this.btnStopFarming.Location = new System.Drawing.Point(6, 60);
             this.btnStopFarming.Name = "btnStopFarming";
-            this.btnStopFarming.Size = new System.Drawing.Size(144, 23);
+            this.btnStopFarming.Size = new System.Drawing.Size(144, 33);
             this.btnStopFarming.TabIndex = 1;
             this.btnStopFarming.Text = "Stop Farming";
             this.btnStopFarming.UseVisualStyleBackColor = true;
@@ -181,7 +170,7 @@
             this.btnStartFarming.Enabled = false;
             this.btnStartFarming.Location = new System.Drawing.Point(6, 19);
             this.btnStartFarming.Name = "btnStartFarming";
-            this.btnStartFarming.Size = new System.Drawing.Size(144, 23);
+            this.btnStartFarming.Size = new System.Drawing.Size(144, 35);
             this.btnStartFarming.TabIndex = 0;
             this.btnStartFarming.Text = "Start Farming";
             this.btnStartFarming.UseVisualStyleBackColor = true;
@@ -460,7 +449,7 @@
             this.botPage1.Controls.Add(this.groupBox3);
             this.botPage1.Controls.Add(this.loggingBox);
             this.botPage1.Controls.Add(this.groupBox4);
-            this.botPage1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.botPage1.Cursor = System.Windows.Forms.Cursors.Default;
             this.botPage1.Location = new System.Drawing.Point(4, 22);
             this.botPage1.Name = "botPage1";
             this.botPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -619,7 +608,6 @@
         private System.Windows.Forms.TabPage botPage1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.Label lbCanEvolveCont;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openNewBotToolStripMenuItem;
         private GMap.NET.WindowsForms.GMapControl MainMap;

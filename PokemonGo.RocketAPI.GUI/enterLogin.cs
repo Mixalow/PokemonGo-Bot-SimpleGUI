@@ -26,12 +26,15 @@ namespace PokemonGo.RocketAPI.GUI
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e) {
-            radioButton1.Checked = !radioButton2.Checked;
+            textBox1.Enabled = true;
+            textBox2.Enabled = true;
         }
 
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-            radioButton1.Checked = !radioButton2.Checked;
+        private void radioButton1_CheckedChanged(object sender, EventArgs e) {
+            textBox1.Text = "";
+            textBox2.Text = "";
+            textBox1.Enabled = false;
+            textBox2.Enabled = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -52,9 +55,9 @@ namespace PokemonGo.RocketAPI.GUI
                 MessageBox.Show("Invalid Username/Password!", "Error");
         }
 
-        private void enterLogin_Load(object sender, EventArgs e)
-        {
-
+        private void enterLogin_Load(object sender, EventArgs e) {
+            radioButton1.Enabled = false;
+            radioButton2.Checked = true;
         }
     }
 }
