@@ -36,5 +36,6 @@ This project is to create a simple GUI application for the Pokemon Go Rocket API
 - Re-did Login GUI
 
 # Credits
+- [Novalys](https://github.com/Novalys/PokemonGo-Bot-SimpleGUI) (Original Bot)
 - [FeroxRev](https://github.com/FeroxRev/Pokemon-Go-Rocket-API) (Legacy Link)
 - [NecronomiconCoding](https://github.com/NecronomiconCoding/Pokemon-Go-Bot) (Active)
