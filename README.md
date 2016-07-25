@@ -4,7 +4,7 @@ This project is to create a simple GUI application for the Pokemon Go Rocket API
 
 <details>
   <summary>Screenshots</summary>
-  ![Application Demo](http://i.imgur.com/thJXGjw.png)
+  ![Application Demo](http://i.imgur.com/TsoARNO.png)
   ![Application Demo](http://i.imgur.com/dKZMpKG.png)
   ![Application Demo](http://i.imgur.com/aHa5U80.png)
 </details>
