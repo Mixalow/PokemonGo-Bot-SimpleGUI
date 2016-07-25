@@ -13,6 +13,19 @@ This project is to create a simple GUI application for the Pokemon Go Rocket API
 ## The Simple
 - Download the [Latest Release](https://github.com/SharkNGU/PokemonGo-Bot-SimpleGUI/releases)
 
+## Changes - Version 0.14
+- Fixed Live Map Changing
+- Fixed Google Multi Login (Clear Token Option Added)
+- Cleaned Up PokeLog
+- All Functionality Can Be Used Without Stopping Bot
+- Changed Item Cleaning Values To More Logical Ones
+- Improved Overall Speed of The Bot
+
+## Changes - Version 0.13
+- Added Live Location View
+- Fixed Crashing Issues
+- Changed Map Provider To Google
+
 ## Changes - Version 0.12
 - Added Ability To Save Locations (location.txt files can also be shared with others)
 - Improved The Built In Map Browser
@@ -21,11 +34,6 @@ This project is to create a simple GUI application for the Pokemon Go Rocket API
 - Added An Account Manager (Save & Manage Multiple Accounts)
 - Made Some Minor Improvements to parts of the program (nothing important)
 - Re-did Login GUI
-
-## Changes - Version 0.13
-- Added Live Location View
-- Fixed Crashing Issues
-- Changed Map Provider To Google
 
 # Credits
 - [FeroxRev](https://github.com/FeroxRev/Pokemon-Go-Rocket-API) (Legacy Link)
