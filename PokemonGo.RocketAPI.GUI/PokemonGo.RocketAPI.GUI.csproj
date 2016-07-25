@@ -88,6 +88,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="enterLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="enterLogin.Designer.cs">
+      <DependentUpon>enterLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="enterName.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="enterName.Designer.cs">
+      <DependentUpon>enterName.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUILogger.cs" />
     <Compile Include="LocationSelector.cs">
       <SubType>Form</SubType>
@@ -115,6 +127,12 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="enterLogin.resx">
+      <DependentUpon>enterLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="enterName.resx">
+      <DependentUpon>enterName.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LocationSelector.resx">
       <DependentUpon>LocationSelector.cs</DependentUpon>
     </EmbeddedResource>

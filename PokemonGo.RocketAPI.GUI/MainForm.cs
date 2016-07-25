@@ -204,6 +204,7 @@ namespace PokemonGo.RocketAPI.GUI
             btnRecycleItems.Enabled = true;
             btnEvolvePokemons.Enabled = true;
             cbKeepPkToEvolve.Enabled = true;
+            button1.Enabled = true;
 
             Logger.Write("Ready to Work.");
         }
@@ -255,6 +256,7 @@ namespace PokemonGo.RocketAPI.GUI
             btnTransferDuplicates.Enabled = false;
             cbKeepPkToEvolve.Enabled = false;
             lbCanEvolveCont.Enabled = false;
+            //button1.Enabled = false;
 
 
             btnStopFarming.Enabled = true;
@@ -283,6 +285,7 @@ namespace PokemonGo.RocketAPI.GUI
             btnTransferDuplicates.Enabled = true;
             cbKeepPkToEvolve.Enabled = true;
             lbCanEvolveCont.Enabled = true;
+            button1.Enabled = true;
 
             btnStopFarming.Enabled = false;
 
@@ -386,17 +389,13 @@ namespace PokemonGo.RocketAPI.GUI
                     // Start Farming Pokestops/Pokemons.
                     await ExecuteFarmingPokestopsAndPokemons();
 
-                    // Only Auto-Evolve/Transfer when Continuous.
-                    if (isFarmingActive)
-                    {
-                        // Evolve Pokemons.
-                        btnEvolvePokemons_Click(null, null);
-                        System.Threading.Thread.Sleep(10000);
+                    // Evolve Pokemons.
+                    //btnEvolvePokemons_Click(null, null);
+                    //System.Threading.Thread.Sleep(10000);
 
-                        // Transfer Duplicates.
-                        btnTransferDuplicates_Click(null, null);
-                        System.Threading.Thread.Sleep(10000);
-                    }
+                    // Transfer Duplicates.
+                    //btnTransferDuplicates_Click(null, null);
+                    System.Threading.Thread.Sleep(10000);
                 }
                 catch (Exception ex)
                 {
@@ -792,11 +791,14 @@ namespace PokemonGo.RocketAPI.GUI
                     return;
                 }
 
-                Logger.Write("Waiting 10 seconds before moving to the next Pokemon.");
-                await Task.Delay(10000);
+                Logger.Write("Waiting 5 seconds before moving to the next Pokemon.");
+                await Task.Delay(5000);
             }
         }
 
-
+        private void button1_Click(object sender, EventArgs e)
+        {
+            displayPositionSelector();
+        }
     }
 }

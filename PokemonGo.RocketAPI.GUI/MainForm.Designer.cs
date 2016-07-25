@@ -61,6 +61,7 @@
             this.boxPokemonName = new System.Windows.Forms.TextBox();
             this.boxPokemonCaughtProb = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -71,6 +72,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.lbCanEvolveCont);
             this.groupBox1.Controls.Add(this.cbKeepPkToEvolve);
             this.groupBox1.Controls.Add(this.btnRecycleItems);
@@ -78,9 +80,9 @@
             this.groupBox1.Controls.Add(this.btnEvolvePokemons);
             this.groupBox1.Controls.Add(this.btnStopFarming);
             this.groupBox1.Controls.Add(this.btnStartFarming);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(12, 21);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(156, 277);
+            this.groupBox1.Size = new System.Drawing.Size(156, 341);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Bot Control";
@@ -167,7 +169,7 @@
             this.groupBox3.Controls.Add(this.lbPkmnCaptured);
             this.groupBox3.Controls.Add(this.lbPkmnHr);
             this.groupBox3.Controls.Add(this.lbExpHour);
-            this.groupBox3.Location = new System.Drawing.Point(12, 295);
+            this.groupBox3.Location = new System.Drawing.Point(12, 368);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(156, 74);
             this.groupBox3.TabIndex = 2;
@@ -211,7 +213,7 @@
             this.groupBox4.Controls.Add(this.lbExperience);
             this.groupBox4.Controls.Add(this.lbLevel);
             this.groupBox4.Controls.Add(this.lbName);
-            this.groupBox4.Location = new System.Drawing.Point(12, 375);
+            this.groupBox4.Location = new System.Drawing.Point(12, 448);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(156, 103);
             this.groupBox4.TabIndex = 4;
@@ -287,7 +289,7 @@
             this.loggingBox.Location = new System.Drawing.Point(174, 322);
             this.loggingBox.Multiline = true;
             this.loggingBox.Name = "loggingBox";
-            this.loggingBox.Size = new System.Drawing.Size(458, 156);
+            this.loggingBox.Size = new System.Drawing.Size(458, 229);
             this.loggingBox.TabIndex = 5;
             // 
             // groupBox2
@@ -413,11 +415,22 @@
             this.label15.TabIndex = 10;
             this.label15.Text = "Name";
             // 
+            // button1
+            // 
+            this.button1.Enabled = false;
+            this.button1.Location = new System.Drawing.Point(6, 277);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(144, 46);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "Change Location";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(644, 489);
+            this.ClientSize = new System.Drawing.Size(644, 562);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.loggingBox);
@@ -481,6 +494,7 @@
         private System.Windows.Forms.Label lbExperience;
         private System.Windows.Forms.Label lbItemsInventory;
         private System.Windows.Forms.Label lbPokemonsInventory;
+        private System.Windows.Forms.Button button1;
     }
 }
 
