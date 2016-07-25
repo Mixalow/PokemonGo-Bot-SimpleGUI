@@ -11,7 +11,7 @@ This project is to create a simple GUI application for the Pokemon Go Rocket API
 
 # How to Use
 ## The Simple
-- Download the [Latest Release](https://github.com/Novalys/PokemonGo-Bot-SimpleGUI/releases)
+- Download the [Latest Release](https://github.com/SharkNGU/PokemonGo-Bot-SimpleGUI/releases)
 
 ## Changes
 - Added Ability To Save Locations (location.txt files can also be shared with others)
@@ -21,6 +21,7 @@ This project is to create a simple GUI application for the Pokemon Go Rocket API
 - Added An Account Manager (Save & Manage Multiple Accounts)
 - Made Some Minor Improvements to parts of the program (nothing important)
 - Re-did Login GUI
+- Added Live Location View
 
 # Credits
 - [FeroxRev](https://github.com/FeroxRev/Pokemon-Go-Rocket-API) (Legacy Link)
