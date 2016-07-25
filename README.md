@@ -2,7 +2,12 @@
 
 This project is to create a simple GUI application for the Pokemon Go Rocket API. I will be adding new features as they become stable(ish)in the Necronomicon project and fixing bugs. Raise an issue if you find a problem or have a feature request.
 
-![Application Demo](http://i.imgur.com/ea7wnm8.png)
+<details>
+  <summary>Screenshots</summary>
+  ![Application Demo](http://i.imgur.com/thJXGjw.png)
+  ![Application Demo](http://i.imgur.com/dKZMpKG.png)
+  ![Application Demo](http://i.imgur.com/aHa5U80.png)
+</details>
 
 # How to Use
 ## The Simple
