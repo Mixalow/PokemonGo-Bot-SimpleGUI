@@ -734,16 +734,25 @@ namespace PokemonGo.RocketAPI.GUI
                 boxPokestopInit.Text = count.ToString();
                 boxPokestopCount.Text = pokestopsCount.ToString();
                 count++;
-          
-                var fortSearch = await client.SearchFort(pokeStop.Id, pokeStop.Latitude, pokeStop.Longitude);
-                Logger.Write($"Pokestop - XP: { fortSearch.ExperienceAwarded} Gems: { fortSearch.GemsAwarded}, Eggs: {fortSearch.PokemonDataEgg} Items: {StringUtils.GetSummedFriendlyNameOfItemAwardList(fortSearch.ItemsAwarded)}", LogLevel.Info);
+                if (farmPokestopsCheck.Checked) {
+                    var fortSearch = await client.SearchFort(pokeStop.Id, pokeStop.Latitude, pokeStop.Longitude);
+                    Logger.Write(
+                        $"Pokestop - XP: {fortSearch.ExperienceAwarded} Gems: {fortSearch.GemsAwarded}, Eggs: {fortSearch.PokemonDataEgg} Items: {StringUtils.GetSummedFriendlyNameOfItemAwardList(fortSearch.ItemsAwarded)}",
+                        LogLevel.Info);
 
-                // Experience Counter
-                totalExperience += fortSearch.ExperienceAwarded;
+                    var myItems = await inventory.GetItems();
+                    if (myItems.Select(i => i.Count).Sum() >= 350) {
+                        btnRecycleItems_Click(null, null);
+                    }
+
+                    // Experience Counter
+                    totalExperience += fortSearch.ExperienceAwarded;
+                }
 
                 await GetCurrentPlayerInformation();
                 //Logger.Write("Attempting to Capture Nearby Pokemons.");
-                await ExecuteCatchAllNearbyPokemons();
+                if (farmPokemonCheck.Checked)
+                    await ExecuteCatchAllNearbyPokemons();
 
                 if (!isFarmingActive)
                 {
@@ -756,7 +765,7 @@ namespace PokemonGo.RocketAPI.GUI
                     locationChanged = false;
                     break;
                 }
-                await Task.Delay(1000);
+                await Task.Delay(globalBotSpeed);
             }
         }
 
@@ -791,7 +800,7 @@ namespace PokemonGo.RocketAPI.GUI
                     }
 
                     caughtPokemonResponse = await client.CatchPokemon(pokemon.EncounterId, pokemon.SpawnpointId, pokemon.Latitude, pokemon.Longitude, pokeball);
-                    await Task.Delay(2000);
+                    await Task.Delay(globalBotSpeed);
                 }
                 while (caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchMissed);
 
@@ -884,6 +893,28 @@ namespace PokemonGo.RocketAPI.GUI
         private void groupBox6_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void farmPokestopsCheck_CheckedChanged(object sender, EventArgs e)
+        {
+            if (farmPokestopsCheck.Checked)
+                Logger.Write("PokeStop Collecting Enabled, Bot Will Loot Nearby PokeStops");
+            else
+                Logger.Write("PokeStop Collecting Disabled, Bot Will Not Loot Nearby PokeStops");
+        }
+
+        int globalBotSpeed = 1500;
+        private void numericUpDown1_Leave(object sender, EventArgs e) {
+            globalBotSpeed = (int)numericUpDown1.Value;
+            Logger.Write("Bot Speed Set To " + globalBotSpeed + " MS");
+        }
+
+        private void farmPokemonCheck_CheckedChanged(object sender, EventArgs e)
+        {
+            if (farmPokemonCheck.Checked)
+                Logger.Write("Pokemon Catching Enabled, Bot Will Catch Nearby Pokemon");
+            else
+                Logger.Write("Pokemon Catching Disabled, Bot Will Not Catch Nearby Pokemon");
         }
     }
 }

@@ -69,6 +69,10 @@
             this.openNewBotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMap = new GMap.NET.WindowsForms.GMapControl();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.farmPokemonCheck = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.farmPokestopsCheck = new System.Windows.Forms.CheckBox();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -79,10 +83,15 @@
             this.botPage1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.numericUpDown1);
+            this.groupBox1.Controls.Add(this.farmPokestopsCheck);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.farmPokemonCheck);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.cbKeepPkToEvolve);
             this.groupBox1.Controls.Add(this.btnRecycleItems);
@@ -92,7 +101,7 @@
             this.groupBox1.Controls.Add(this.btnStartFarming);
             this.groupBox1.Location = new System.Drawing.Point(8, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(156, 341);
+            this.groupBox1.Size = new System.Drawing.Size(156, 400);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Bot Control";
@@ -181,7 +190,7 @@
             this.groupBox3.Controls.Add(this.lbPkmnCaptured);
             this.groupBox3.Controls.Add(this.lbPkmnHr);
             this.groupBox3.Controls.Add(this.lbExpHour);
-            this.groupBox3.Location = new System.Drawing.Point(8, 353);
+            this.groupBox3.Location = new System.Drawing.Point(8, 412);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(156, 74);
             this.groupBox3.TabIndex = 2;
@@ -225,7 +234,7 @@
             this.groupBox4.Controls.Add(this.lbExperience);
             this.groupBox4.Controls.Add(this.lbLevel);
             this.groupBox4.Controls.Add(this.lbName);
-            this.groupBox4.Location = new System.Drawing.Point(8, 433);
+            this.groupBox4.Location = new System.Drawing.Point(8, 492);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(156, 103);
             this.groupBox4.TabIndex = 4;
@@ -302,7 +311,7 @@
             this.loggingBox.Location = new System.Drawing.Point(170, 307);
             this.loggingBox.Multiline = true;
             this.loggingBox.Name = "loggingBox";
-            this.loggingBox.Size = new System.Drawing.Size(458, 229);
+            this.loggingBox.Size = new System.Drawing.Size(458, 288);
             this.loggingBox.TabIndex = 5;
             this.loggingBox.TextChanged += new System.EventHandler(this.loggingBox_TextChanged);
             // 
@@ -437,7 +446,7 @@
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(657, 574);
+            this.tabControl1.Size = new System.Drawing.Size(657, 627);
             this.tabControl1.TabIndex = 8;
             // 
             // botPage1
@@ -453,7 +462,7 @@
             this.botPage1.Location = new System.Drawing.Point(4, 22);
             this.botPage1.Name = "botPage1";
             this.botPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.botPage1.Size = new System.Drawing.Size(649, 548);
+            this.botPage1.Size = new System.Drawing.Size(649, 601);
             this.botPage1.TabIndex = 1;
             this.botPage1.Text = "Bot";
             this.botPage1.UseVisualStyleBackColor = true;
@@ -533,11 +542,64 @@
             this.groupBox6.Text = "Live Map View";
             this.groupBox6.Enter += new System.EventHandler(this.groupBox6_Enter);
             // 
+            // farmPokemonCheck
+            // 
+            this.farmPokemonCheck.AutoSize = true;
+            this.farmPokemonCheck.Checked = true;
+            this.farmPokemonCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.farmPokemonCheck.Location = new System.Drawing.Point(9, 99);
+            this.farmPokemonCheck.Name = "farmPokemonCheck";
+            this.farmPokemonCheck.Size = new System.Drawing.Size(102, 17);
+            this.farmPokemonCheck.TabIndex = 8;
+            this.farmPokemonCheck.Text = "Catch Pokemon";
+            this.farmPokemonCheck.UseVisualStyleBackColor = true;
+            this.farmPokemonCheck.CheckedChanged += new System.EventHandler(this.farmPokemonCheck_CheckedChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 348);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(94, 13);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Bot Speed (In MS)";
+            // 
+            // farmPokestopsCheck
+            // 
+            this.farmPokestopsCheck.AutoSize = true;
+            this.farmPokestopsCheck.Checked = true;
+            this.farmPokestopsCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.farmPokestopsCheck.Location = new System.Drawing.Point(9, 119);
+            this.farmPokestopsCheck.Name = "farmPokestopsCheck";
+            this.farmPokestopsCheck.Size = new System.Drawing.Size(113, 17);
+            this.farmPokestopsCheck.TabIndex = 11;
+            this.farmPokestopsCheck.Text = "Collect PokeStops";
+            this.farmPokestopsCheck.UseVisualStyleBackColor = true;
+            this.farmPokestopsCheck.CheckedChanged += new System.EventHandler(this.farmPokestopsCheck_CheckedChanged);
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(6, 364);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            1410065408,
+            2,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(144, 20);
+            this.numericUpDown1.TabIndex = 12;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            1500,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Leave += new System.EventHandler(this.numericUpDown1_Leave);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1206, 608);
+            this.ClientSize = new System.Drawing.Size(1206, 657);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
@@ -565,6 +627,7 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.groupBox6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -612,6 +675,10 @@
         private System.Windows.Forms.ToolStripMenuItem openNewBotToolStripMenuItem;
         private GMap.NET.WindowsForms.GMapControl MainMap;
         private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.CheckBox farmPokemonCheck;
+        private System.Windows.Forms.CheckBox farmPokestopsCheck;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
     }
 }
 

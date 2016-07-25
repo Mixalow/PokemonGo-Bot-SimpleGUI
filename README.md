@@ -13,7 +13,14 @@ This project is to create a simple GUI application for the Pokemon Go Rocket API
 ## The Simple
 - Download the [Latest Release](https://github.com/SharkNGU/PokemonGo-Bot-SimpleGUI/releases)
 
-## Changes - Version 0.14
+# Changelog
+## Version 0.15
+- Added Option To Disable Pokemon Catching (PokeStop Farm Bot)
+- Added Option To Disable PokeStop Looting (Pokemon Farm Bot)
+- Auto Recycle Items When Inventory Full
+- Added Option To Change Bot Speed (In MS)
+
+## Version 0.14
 - Fixed Live Map Changing
 - Fixed Google Multi Login (Clear Token Option Added)
 - Cleaned Up PokeLog
@@ -21,12 +28,12 @@ This project is to create a simple GUI application for the Pokemon Go Rocket API
 - Changed Item Cleaning Values To More Logical Ones
 - Improved Overall Speed of The Bot
 
-## Changes - Version 0.13
+## Version 0.13
 - Added Live Location View
 - Fixed Crashing Issues
 - Changed Map Provider To Google
 
-## Changes - Version 0.12
+## Version 0.12
 - Added Ability To Save Locations (location.txt files can also be shared with others)
 - Improved The Built In Map Browser
 - Added Google Location Search
