@@ -26,7 +26,7 @@ namespace PokemonGo.RocketAPI.GUI
                 this.Close();
             }
             else
-                MessageBox.Show("Invalid Name!");
+                MessageBox.Show("Invalid Name!", "Error");
         }
 
         private void enterName_Load(object sender, EventArgs e)

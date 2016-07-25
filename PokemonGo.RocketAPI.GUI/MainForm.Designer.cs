@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.lbCanEvolveCont = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.cbKeepPkToEvolve = new System.Windows.Forms.CheckBox();
             this.btnRecycleItems = new System.Windows.Forms.Button();
             this.btnTransferDuplicates = new System.Windows.Forms.Button();
@@ -61,13 +61,24 @@
             this.boxPokemonName = new System.Windows.Forms.TextBox();
             this.boxPokemonCaughtProb = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.botPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.lbCanEvolveCont = new System.Windows.Forms.Label();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openNewBotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MainMap = new GMap.NET.WindowsForms.GMapControl();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dGrid)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.botPage1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -80,21 +91,23 @@
             this.groupBox1.Controls.Add(this.btnEvolvePokemons);
             this.groupBox1.Controls.Add(this.btnStopFarming);
             this.groupBox1.Controls.Add(this.btnStartFarming);
-            this.groupBox1.Location = new System.Drawing.Point(12, 21);
+            this.groupBox1.Location = new System.Drawing.Point(8, 6);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(156, 341);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Bot Control";
             // 
-            // lbCanEvolveCont
+            // button1
             // 
-            this.lbCanEvolveCont.AutoSize = true;
-            this.lbCanEvolveCont.Location = new System.Drawing.Point(28, 199);
-            this.lbCanEvolveCont.Name = "lbCanEvolveCont";
-            this.lbCanEvolveCont.Size = new System.Drawing.Size(61, 13);
-            this.lbCanEvolveCont.TabIndex = 6;
-            this.lbCanEvolveCont.Text = "can Evolve";
+            this.button1.Enabled = false;
+            this.button1.Location = new System.Drawing.Point(6, 277);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(144, 46);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "Change Location";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // cbKeepPkToEvolve
             // 
@@ -169,7 +182,7 @@
             this.groupBox3.Controls.Add(this.lbPkmnCaptured);
             this.groupBox3.Controls.Add(this.lbPkmnHr);
             this.groupBox3.Controls.Add(this.lbExpHour);
-            this.groupBox3.Location = new System.Drawing.Point(12, 368);
+            this.groupBox3.Location = new System.Drawing.Point(8, 353);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(156, 74);
             this.groupBox3.TabIndex = 2;
@@ -213,7 +226,7 @@
             this.groupBox4.Controls.Add(this.lbExperience);
             this.groupBox4.Controls.Add(this.lbLevel);
             this.groupBox4.Controls.Add(this.lbName);
-            this.groupBox4.Location = new System.Drawing.Point(12, 448);
+            this.groupBox4.Location = new System.Drawing.Point(8, 433);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(156, 103);
             this.groupBox4.TabIndex = 4;
@@ -276,21 +289,23 @@
             this.dGrid.AllowUserToDeleteRows = false;
             this.dGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dGrid.Location = new System.Drawing.Point(174, 21);
+            this.dGrid.Location = new System.Drawing.Point(170, 6);
             this.dGrid.Name = "dGrid";
             this.dGrid.ReadOnly = true;
             this.dGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dGrid.Size = new System.Drawing.Size(458, 212);
             this.dGrid.TabIndex = 0;
+            this.dGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dGrid_CellContentClick);
             // 
             // loggingBox
             // 
             this.loggingBox.Enabled = false;
-            this.loggingBox.Location = new System.Drawing.Point(174, 322);
+            this.loggingBox.Location = new System.Drawing.Point(170, 307);
             this.loggingBox.Multiline = true;
             this.loggingBox.Name = "loggingBox";
             this.loggingBox.Size = new System.Drawing.Size(458, 229);
             this.loggingBox.TabIndex = 5;
+            this.loggingBox.TextChanged += new System.EventHandler(this.loggingBox_TextChanged);
             // 
             // groupBox2
             // 
@@ -300,7 +315,7 @@
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.boxPokestopName);
             this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Location = new System.Drawing.Point(174, 243);
+            this.groupBox2.Location = new System.Drawing.Point(170, 228);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(258, 73);
             this.groupBox2.TabIndex = 6;
@@ -370,7 +385,7 @@
             this.groupBox5.Controls.Add(this.boxPokemonName);
             this.groupBox5.Controls.Add(this.boxPokemonCaughtProb);
             this.groupBox5.Controls.Add(this.label15);
-            this.groupBox5.Location = new System.Drawing.Point(438, 243);
+            this.groupBox5.Location = new System.Drawing.Point(434, 228);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(194, 73);
             this.groupBox5.TabIndex = 7;
@@ -415,30 +430,127 @@
             this.label15.TabIndex = 10;
             this.label15.Text = "Name";
             // 
-            // button1
+            // tabControl1
             // 
-            this.button1.Enabled = false;
-            this.button1.Location = new System.Drawing.Point(6, 277);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(144, 46);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Change Location";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.tabControl1.Controls.Add(this.botPage1);
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Location = new System.Drawing.Point(4, 27);
+            this.tabControl1.Multiline = true;
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(657, 574);
+            this.tabControl1.TabIndex = 8;
+            // 
+            // botPage1
+            // 
+            this.botPage1.Controls.Add(this.dGrid);
+            this.botPage1.Controls.Add(this.groupBox5);
+            this.botPage1.Controls.Add(this.groupBox1);
+            this.botPage1.Controls.Add(this.groupBox2);
+            this.botPage1.Controls.Add(this.groupBox3);
+            this.botPage1.Controls.Add(this.loggingBox);
+            this.botPage1.Controls.Add(this.groupBox4);
+            this.botPage1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.botPage1.Location = new System.Drawing.Point(4, 22);
+            this.botPage1.Name = "botPage1";
+            this.botPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.botPage1.Size = new System.Drawing.Size(649, 548);
+            this.botPage1.TabIndex = 1;
+            this.botPage1.Text = "Bot";
+            this.botPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Size = new System.Drawing.Size(649, 548);
+            this.tabPage1.TabIndex = 2;
+            this.tabPage1.Text = "+";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.BackColor = System.Drawing.Color.Transparent;
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.settingsToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1206, 24);
+            this.menuStrip1.TabIndex = 9;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // lbCanEvolveCont
+            // 
+            this.lbCanEvolveCont.AutoSize = true;
+            this.lbCanEvolveCont.Location = new System.Drawing.Point(28, 199);
+            this.lbCanEvolveCont.Name = "lbCanEvolveCont";
+            this.lbCanEvolveCont.Size = new System.Drawing.Size(61, 13);
+            this.lbCanEvolveCont.TabIndex = 6;
+            this.lbCanEvolveCont.Text = "can Evolve";
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openNewBotToolStripMenuItem});
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            // 
+            // openNewBotToolStripMenuItem
+            // 
+            this.openNewBotToolStripMenuItem.Name = "openNewBotToolStripMenuItem";
+            this.openNewBotToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openNewBotToolStripMenuItem.Text = "Open New Bot";
+            this.openNewBotToolStripMenuItem.Click += new System.EventHandler(this.openNewBotToolStripMenuItem_Click_1);
+            // 
+            // MainMap
+            // 
+            this.MainMap.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.MainMap.Bearing = 0F;
+            this.MainMap.CanDragMap = true;
+            this.MainMap.EmptyTileColor = System.Drawing.Color.Navy;
+            this.MainMap.GrayScaleMode = false;
+            this.MainMap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
+            this.MainMap.LevelsKeepInMemmory = 5;
+            this.MainMap.Location = new System.Drawing.Point(673, 50);
+            this.MainMap.MarkersEnabled = true;
+            this.MainMap.MaxZoom = 2;
+            this.MainMap.MinZoom = 2;
+            this.MainMap.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
+            this.MainMap.Name = "MainMap";
+            this.MainMap.NegativeMode = false;
+            this.MainMap.PolygonsEnabled = true;
+            this.MainMap.RetryLoadTile = 0;
+            this.MainMap.RoutesEnabled = true;
+            this.MainMap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
+            this.MainMap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
+            this.MainMap.ShowTileGridLines = false;
+            this.MainMap.Size = new System.Drawing.Size(515, 535);
+            this.MainMap.TabIndex = 10;
+            this.MainMap.Zoom = 0D;
+            this.MainMap.OnMapDrag += new GMap.NET.MapDrag(this.MainMap_OnMapDrag);
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Location = new System.Drawing.Point(667, 35);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(527, 561);
+            this.groupBox6.TabIndex = 11;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Live Map View";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(644, 562);
-            this.Controls.Add(this.groupBox5);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.loggingBox);
-            this.Controls.Add(this.dGrid);
-            this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox1);
+            this.ClientSize = new System.Drawing.Size(1206, 608);
+            this.Controls.Add(this.groupBox6);
+            this.Controls.Add(this.MainMap);
+            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -455,6 +567,11 @@
             this.groupBox2.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.botPage1.ResumeLayout(false);
+            this.botPage1.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -477,7 +594,6 @@
         private System.Windows.Forms.Button btnRecycleItems;
         private System.Windows.Forms.Button btnTransferDuplicates;
         private System.Windows.Forms.Button btnEvolvePokemons;
-        private System.Windows.Forms.Label lbCanEvolveCont;
         private System.Windows.Forms.CheckBox cbKeepPkToEvolve;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label10;
@@ -495,6 +611,15 @@
         private System.Windows.Forms.Label lbItemsInventory;
         private System.Windows.Forms.Label lbPokemonsInventory;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage botPage1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.Label lbCanEvolveCont;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openNewBotToolStripMenuItem;
+        private GMap.NET.WindowsForms.GMapControl MainMap;
+        private System.Windows.Forms.GroupBox groupBox6;
     }
 }
 

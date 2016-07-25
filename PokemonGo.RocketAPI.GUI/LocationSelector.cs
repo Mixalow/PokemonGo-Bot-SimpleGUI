@@ -146,7 +146,7 @@ namespace PokemonGo.RocketAPI.GUI {
                 // Load the Map Settings
                 MainMap.OnMapDrag += MainMap_OnMapDrag;
                 MainMap.DragButton = MouseButtons.Left;
-                MainMap.MapProvider = GMapProviders.BingMap;
+                MainMap.MapProvider = GMapProviders.GoogleMap;
                 MainMap.Position = new PointLatLng(UserSettings.Default.DefaultLatitude,
                     UserSettings.Default.DefaultLongitude);
                 MainMap.MinZoom = 0;
@@ -237,7 +237,7 @@ namespace PokemonGo.RocketAPI.GUI {
                 boxLat.Text = Convert.ToString(destination_latLong.results[0].geometry.location.lat);
             }
             catch (Exception ex) {
-                MessageBox.Show("Invalid Location!");
+                MessageBox.Show("Invalid Location!", "Error");
             }
         }
 
@@ -253,7 +253,7 @@ namespace PokemonGo.RocketAPI.GUI {
             catch {
                 boxLat.Text = lat.ToString();
                 boxLng.Text = lng.ToString();
-                MessageBox.Show("Invalid Input!");
+                MessageBox.Show("Invalid Input!", "Error");
             }
         }
 
@@ -264,15 +264,16 @@ namespace PokemonGo.RocketAPI.GUI {
             catch {
                 boxLat.Text = lat.ToString();
                 boxLng.Text = lng.ToString();
-                MessageBox.Show("Invalid Input!");
+                MessageBox.Show("Invalid Input!", "Error");
             }
         }
 
         private void saveSelectedLocationToolStripMenuItem_Click(object sender, EventArgs e) {
             enterName nameForm = new enterName();
+            enterName.formNameTxt = "";
             nameForm.ShowDialog();
 
-            if (!String.IsNullOrWhiteSpace(nameForm.returnStr))
+            if (!String.IsNullOrWhiteSpace(enterName.formNameTxt))
             {
                 using (StreamWriter sw = File.AppendText(@"locations.txt")) {
                     sw.WriteLine(enterName.formNameTxt + ": " + lat + ": " + lng);
@@ -311,6 +312,11 @@ namespace PokemonGo.RocketAPI.GUI {
         }
 
         private void updLocationBtn_Click(object sender, EventArgs e)
+        {
+            addGoodFarmingLocations();
+        }
+
+        private void settingStrip_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
 
         }

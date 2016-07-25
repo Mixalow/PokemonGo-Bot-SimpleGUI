@@ -15,6 +15,9 @@ using PokemonGo.RocketAPI.GeneratedCode;
 using PokemonGo.RocketAPI.Extensions;
 using PokemonGo.RocketAPI.Logic.Utils;
 using System.IO;
+using GMap.NET;
+using GMap.NET.MapProviders;
+using GMap.NET.WindowsForms;
 
 namespace PokemonGo.RocketAPI.GUI
 {
@@ -72,33 +75,36 @@ namespace PokemonGo.RocketAPI.GUI
         private void displayPositionSelector()
         {
             // Display Position Selector
-            LocationSelector locationSelect = new LocationSelector();
-            locationSelect.ShowDialog();
+            if (loginSelected) {
+                LocationSelector locationSelect = new LocationSelector();
+                locationSelect.ShowDialog();
 
-            // Check if Position was Selected
-            try
-            {
-                if (!locationSelect.setPos)
-                    throw new ArgumentException();
+                // Check if Position was Selected
+                try {
+                    if (!locationSelect.setPos)
+                        throw new ArgumentException();
 
-                // Persisting the Initial Position
-                client.SaveLatLng(locationSelect.lat, locationSelect.lng);
-                client.SetCoordinates(locationSelect.lat, locationSelect.lng, UserSettings.Default.DefaultAltitude);
+                    // Persisting the Initial Position
+                    client.SaveLatLng(locationSelect.lat, locationSelect.lng);
+                    client.SetCoordinates(locationSelect.lat, locationSelect.lng, UserSettings.Default.DefaultAltitude);
+                    Logger.Write(
+                        $"Starting in Location Lat: {UserSettings.Default.DefaultLatitude} Lng: {UserSettings.Default.DefaultLongitude}");
+
+                    // Close the Location Window
+                    locationSelect.Close();
+                    initializeMap();
+                }
+                catch {
+                    MessageBox.Show("Please Select A Starting Point!", "Error");
+                    locationSelect.Close();
+                    displayPositionSelector();
+                }
             }
-            catch
-            {
-                MessageBox.Show("You need to declare a valid starting location.", "Safety Check");
-                MessageBox.Show("To protect your account of a possible soft ban, the software will close.", "Safety Check");
-                Application.Exit();
-            }
-
-            // Display Starting Location
-            Logger.Write($"Starting in Location Lat: {UserSettings.Default.DefaultLatitude} Lng: {UserSettings.Default.DefaultLongitude}");
-
-            // Close the Location Window
-            locationSelect.Close();
         }
 
+        public bool loginSelected = false;
+        public AuthType sAType = AuthType.Google;
+        public string[] loginDetails = new string[2];
         private async Task displayLoginWindow()
         {
             // Display Login
@@ -111,11 +117,17 @@ namespace PokemonGo.RocketAPI.GUI
             if (!loginForm.loginSelected)
                 Application.Exit();
 
+            loginSelected = loginForm.loginSelected;
+            sAType = loginForm.auth;
+            loginDetails[0] = loginForm.boxUsername.Text;
+            loginDetails[1] = loginForm.boxPassword.Text;
+
             // Determine Login Method
             if (loginForm.auth == AuthType.Ptc)
                 await loginPtc(loginForm.boxUsername.Text, loginForm.boxPassword.Text);
             if (loginForm.auth == AuthType.Google)
                 await loginGoogle();
+            
 
             // Select the Location
             Logger.Write("Select Starting Location...");
@@ -255,7 +267,7 @@ namespace PokemonGo.RocketAPI.GUI
             btnRecycleItems.Enabled = false;
             btnTransferDuplicates.Enabled = false;
             cbKeepPkToEvolve.Enabled = false;
-            lbCanEvolveCont.Enabled = false;
+            //lbCanEvolveCont.Enabled = false;
             //button1.Enabled = false;
 
 
@@ -284,7 +296,7 @@ namespace PokemonGo.RocketAPI.GUI
             btnRecycleItems.Enabled = true;
             btnTransferDuplicates.Enabled = true;
             cbKeepPkToEvolve.Enabled = true;
-            lbCanEvolveCont.Enabled = true;
+            //lbCanEvolveCont.Enabled = true;
             button1.Enabled = true;
 
             btnStopFarming.Enabled = false;
@@ -377,7 +389,7 @@ namespace PokemonGo.RocketAPI.GUI
         private async void startBottingSession()
         {
             // Setup the Timer
-            sessionTimer.Interval = 5000;
+            sessionTimer.Interval = 2000;
             sessionTimer.Start();
             sessionStartTime = DateTime.Now;
 
@@ -395,13 +407,17 @@ namespace PokemonGo.RocketAPI.GUI
 
                     // Transfer Duplicates.
                     //btnTransferDuplicates_Click(null, null);
-                    System.Threading.Thread.Sleep(10000);
+                    System.Threading.Thread.Sleep(100);
                 }
                 catch (Exception ex)
                 {
-                    Logger.Write("Bot Crashed! :( Starting again in 5 seconds...");
-                    createCrashLog(ex);
-                    System.Threading.Thread.Sleep(5000);
+                    Logger.Write("InvalidResponseException - Reconnecting Bot (Please Wait...)");
+                    //createCrashLog(ex);
+                    System.Threading.Thread.Sleep(1000);
+                    if (sAType == AuthType.Ptc)
+                        await loginPtc(loginDetails[0], loginDetails[1]);
+                    if (sAType == AuthType.Google)
+                        await loginGoogle();
                 }
             }           
         }
@@ -432,7 +448,7 @@ namespace PokemonGo.RocketAPI.GUI
             boxPokestopInit.Clear();
             boxPokestopCount.Clear();
 
-            MessageBox.Show("Please allow a few seconds for the pending tasks to complete.");
+            //MessageBox.Show("Please allow a few seconds for the pending tasks to complete.");
         }
 
         ///////////////////////
@@ -697,6 +713,7 @@ namespace PokemonGo.RocketAPI.GUI
             {
                 var update = await client.UpdatePlayerLocation(pokeStop.Latitude, pokeStop.Longitude, settings.DefaultAltitude);
                 var fortInfo = await client.GetFort(pokeStop.Id, pokeStop.Latitude, pokeStop.Longitude);
+                MainMap.Position = new PointLatLng(client.CurrentLat, client.CurrentLng);
 
                 boxPokestopName.Text = fortInfo.Name.ToString();
                 boxPokestopInit.Text = count.ToString();
@@ -721,8 +738,8 @@ namespace PokemonGo.RocketAPI.GUI
                     return;
                 }                    
 
-                Logger.Write("Waiting 10 seconds before moving to the next Pokestop.");
-                await Task.Delay(10000);
+                Logger.Write("Waiting 2 seconds before moving to the next Pokestop.");
+                await Task.Delay(2000);
             }
         }
 
@@ -739,6 +756,8 @@ namespace PokemonGo.RocketAPI.GUI
                 var encounterPokemonResponse = await client.EncounterPokemon(pokemon.EncounterId, pokemon.SpawnpointId);
                 var pokemonCP = encounterPokemonResponse?.WildPokemon?.PokemonData?.Cp;
                 var pokeball = await GetBestBall(pokemonCP);
+
+                MainMap.Position = new PointLatLng(client.CurrentLat, client.CurrentLng);
 
                 Logger.Write($"Fighting {pokemon.PokemonId} with Capture Probability of {(encounterPokemonResponse?.CaptureProbability.CaptureProbability_.First())*100:0.0}%");
 
@@ -791,14 +810,58 @@ namespace PokemonGo.RocketAPI.GUI
                     return;
                 }
 
-                Logger.Write("Waiting 5 seconds before moving to the next Pokemon.");
-                await Task.Delay(5000);
+                Logger.Write("Waiting 2 seconds before moving to the next Pokemon.");
+                await Task.Delay(2000);
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             displayPositionSelector();
+        }
+
+        private void dGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void loggingBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void openNewBotToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void initializeMap()
+        {
+            try
+            {
+                // Load the Map Settings
+                //MainMap.OnMapDrag += MainMap_OnMapDrag;
+                //MainMap.DragButton = MouseButtons.Left;
+                MainMap.MapProvider = GMapProviders.GoogleMap;
+                MainMap.Position = new PointLatLng(UserSettings.Default.DefaultLatitude, UserSettings.Default.DefaultLongitude);
+                MainMap.MinZoom = 0;
+                MainMap.MaxZoom = 24;
+                MainMap.Zoom = 15;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void MainMap_OnMapDrag()
+        {
+
+        }
+
+        private void openNewBotToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("PoGoBot-GUI.exe");
         }
     }
 }

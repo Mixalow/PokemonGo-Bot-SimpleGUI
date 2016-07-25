@@ -41,7 +41,7 @@ namespace PokemonGo.RocketAPI.GUI
             else if (radioButton2.Checked)
                 returnAccType = 1;
             else
-                MessageBox.Show("Please Choose An Account Type!");
+                MessageBox.Show("Please Choose An Account Type!", "Error");
 
             if (!String.IsNullOrWhiteSpace(textBox1.Text) || !String.IsNullOrWhiteSpace(textBox2.Text) && returnAccType != 1337) {
                 returnStrUsr = textBox1.Text;
@@ -49,7 +49,12 @@ namespace PokemonGo.RocketAPI.GUI
                 this.Close();
             }
             else
-                MessageBox.Show("Invalid Username/Password!");
+                MessageBox.Show("Invalid Username/Password!", "Error");
+        }
+
+        private void enterLogin_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

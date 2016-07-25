@@ -133,6 +133,7 @@
             this.Name = "enterLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Enter Login Details (Save Account)";
+            this.Load += new System.EventHandler(this.enterLogin_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

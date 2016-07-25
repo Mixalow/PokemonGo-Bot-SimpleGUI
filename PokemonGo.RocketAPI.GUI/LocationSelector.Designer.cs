@@ -164,8 +164,9 @@
             this.settingStrip.Name = "settingStrip";
             this.settingStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.settingStrip.ShowImageMargin = false;
-            this.settingStrip.Size = new System.Drawing.Size(170, 26);
+            this.settingStrip.Size = new System.Drawing.Size(170, 48);
             this.settingStrip.Text = "Settings";
+            this.settingStrip.Opening += new System.ComponentModel.CancelEventHandler(this.settingStrip_Opening);
             // 
             // saveSelectedLocationToolStripMenuItem
             // 

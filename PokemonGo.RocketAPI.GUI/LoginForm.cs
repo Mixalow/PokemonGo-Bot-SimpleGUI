@@ -93,14 +93,14 @@ namespace PokemonGo.RocketAPI.GUI
             else if (radioButton2.Checked)
                 auth = AuthType.Ptc;
             else
-                MessageBox.Show("Please Choose An Account Type!");
+                MessageBox.Show("Please Choose An Account Type!", "Error");
 
             if (!String.IsNullOrWhiteSpace(boxUsername.Text) || !String.IsNullOrWhiteSpace(boxPassword.Text) && auth != (AuthType)1337) {
                 loginSelected = true;
                 this.Close();
             }
             else
-                MessageBox.Show("Invalid Username/Password!");
+                MessageBox.Show("Invalid Username/Password!", "Error");
         }
 
         private void boxPassword_KeyDown(object sender, KeyEventArgs e)
