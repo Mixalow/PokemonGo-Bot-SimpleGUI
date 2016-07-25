@@ -30,6 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.farmPokestopsCheck = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.farmPokemonCheck = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
             this.cbKeepPkToEvolve = new System.Windows.Forms.CheckBox();
             this.btnRecycleItems = new System.Windows.Forms.Button();
@@ -69,11 +73,8 @@
             this.openNewBotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMap = new GMap.NET.WindowsForms.GMapControl();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.farmPokemonCheck = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.farmPokestopsCheck = new System.Windows.Forms.CheckBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dGrid)).BeginInit();
@@ -83,7 +84,6 @@
             this.botPage1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.groupBox6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -105,6 +105,59 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Bot Control";
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(6, 364);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            1410065408,
+            2,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(144, 20);
+            this.numericUpDown1.TabIndex = 12;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            1500,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Leave += new System.EventHandler(this.numericUpDown1_Leave);
+            // 
+            // farmPokestopsCheck
+            // 
+            this.farmPokestopsCheck.AutoSize = true;
+            this.farmPokestopsCheck.Checked = true;
+            this.farmPokestopsCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.farmPokestopsCheck.Location = new System.Drawing.Point(9, 119);
+            this.farmPokestopsCheck.Name = "farmPokestopsCheck";
+            this.farmPokestopsCheck.Size = new System.Drawing.Size(113, 17);
+            this.farmPokestopsCheck.TabIndex = 11;
+            this.farmPokestopsCheck.Text = "Collect PokeStops";
+            this.farmPokestopsCheck.UseVisualStyleBackColor = true;
+            this.farmPokestopsCheck.CheckedChanged += new System.EventHandler(this.farmPokestopsCheck_CheckedChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 348);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(94, 13);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Bot Speed (In MS)";
+            // 
+            // farmPokemonCheck
+            // 
+            this.farmPokemonCheck.AutoSize = true;
+            this.farmPokemonCheck.Checked = true;
+            this.farmPokemonCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.farmPokemonCheck.Location = new System.Drawing.Point(9, 99);
+            this.farmPokemonCheck.Name = "farmPokemonCheck";
+            this.farmPokemonCheck.Size = new System.Drawing.Size(102, 17);
+            this.farmPokemonCheck.TabIndex = 8;
+            this.farmPokemonCheck.Text = "Catch Pokemon";
+            this.farmPokemonCheck.UseVisualStyleBackColor = true;
+            this.farmPokemonCheck.CheckedChanged += new System.EventHandler(this.farmPokemonCheck_CheckedChanged);
             // 
             // button1
             // 
@@ -472,7 +525,7 @@
             this.tabPage1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(649, 548);
+            this.tabPage1.Size = new System.Drawing.Size(649, 601);
             this.tabPage1.TabIndex = 2;
             this.tabPage1.Text = "+";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -512,7 +565,7 @@
             this.MainMap.GrayScaleMode = false;
             this.MainMap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
             this.MainMap.LevelsKeepInMemmory = 5;
-            this.MainMap.Location = new System.Drawing.Point(12, 19);
+            this.MainMap.Location = new System.Drawing.Point(6, 19);
             this.MainMap.MarkersEnabled = true;
             this.MainMap.MaxZoom = 2;
             this.MainMap.MinZoom = 2;
@@ -525,7 +578,7 @@
             this.MainMap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
             this.MainMap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
             this.MainMap.ShowTileGridLines = false;
-            this.MainMap.Size = new System.Drawing.Size(515, 535);
+            this.MainMap.Size = new System.Drawing.Size(515, 589);
             this.MainMap.TabIndex = 10;
             this.MainMap.Zoom = 0D;
             this.MainMap.OnMapDrag += new GMap.NET.MapDrag(this.MainMap_OnMapDrag);
@@ -536,64 +589,11 @@
             this.groupBox6.Controls.Add(this.MainMap);
             this.groupBox6.Location = new System.Drawing.Point(663, 36);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(527, 561);
+            this.groupBox6.Size = new System.Drawing.Size(527, 614);
             this.groupBox6.TabIndex = 11;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Live Map View";
             this.groupBox6.Enter += new System.EventHandler(this.groupBox6_Enter);
-            // 
-            // farmPokemonCheck
-            // 
-            this.farmPokemonCheck.AutoSize = true;
-            this.farmPokemonCheck.Checked = true;
-            this.farmPokemonCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.farmPokemonCheck.Location = new System.Drawing.Point(9, 99);
-            this.farmPokemonCheck.Name = "farmPokemonCheck";
-            this.farmPokemonCheck.Size = new System.Drawing.Size(102, 17);
-            this.farmPokemonCheck.TabIndex = 8;
-            this.farmPokemonCheck.Text = "Catch Pokemon";
-            this.farmPokemonCheck.UseVisualStyleBackColor = true;
-            this.farmPokemonCheck.CheckedChanged += new System.EventHandler(this.farmPokemonCheck_CheckedChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 348);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(94, 13);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "Bot Speed (In MS)";
-            // 
-            // farmPokestopsCheck
-            // 
-            this.farmPokestopsCheck.AutoSize = true;
-            this.farmPokestopsCheck.Checked = true;
-            this.farmPokestopsCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.farmPokestopsCheck.Location = new System.Drawing.Point(9, 119);
-            this.farmPokestopsCheck.Name = "farmPokestopsCheck";
-            this.farmPokestopsCheck.Size = new System.Drawing.Size(113, 17);
-            this.farmPokestopsCheck.TabIndex = 11;
-            this.farmPokestopsCheck.Text = "Collect PokeStops";
-            this.farmPokestopsCheck.UseVisualStyleBackColor = true;
-            this.farmPokestopsCheck.CheckedChanged += new System.EventHandler(this.farmPokestopsCheck_CheckedChanged);
-            // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Location = new System.Drawing.Point(6, 364);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
-            1410065408,
-            2,
-            0,
-            0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(144, 20);
-            this.numericUpDown1.TabIndex = 12;
-            this.numericUpDown1.Value = new decimal(new int[] {
-            1500,
-            0,
-            0,
-            0});
-            this.numericUpDown1.Leave += new System.EventHandler(this.numericUpDown1_Leave);
             // 
             // MainForm
             // 
@@ -612,6 +612,7 @@
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
@@ -627,7 +628,6 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.groupBox6.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
