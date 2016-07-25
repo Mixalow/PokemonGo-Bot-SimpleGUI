@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.lbCanEvolveCont = new System.Windows.Forms.Label();
             this.cbKeepPkToEvolve = new System.Windows.Forms.CheckBox();
             this.btnRecycleItems = new System.Windows.Forms.Button();
             this.btnTransferDuplicates = new System.Windows.Forms.Button();
@@ -65,7 +66,6 @@
             this.botPage1 = new System.Windows.Forms.TabPage();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.lbCanEvolveCont = new System.Windows.Forms.Label();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openNewBotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMap = new GMap.NET.WindowsForms.GMapControl();
@@ -79,6 +79,7 @@
             this.tabControl1.SuspendLayout();
             this.botPage1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -108,6 +109,15 @@
             this.button1.Text = "Change Location";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // lbCanEvolveCont
+            // 
+            this.lbCanEvolveCont.AutoSize = true;
+            this.lbCanEvolveCont.Location = new System.Drawing.Point(28, 199);
+            this.lbCanEvolveCont.Name = "lbCanEvolveCont";
+            this.lbCanEvolveCont.Size = new System.Drawing.Size(61, 13);
+            this.lbCanEvolveCont.TabIndex = 6;
+            this.lbCanEvolveCont.Text = "can Evolve";
             // 
             // cbKeepPkToEvolve
             // 
@@ -480,15 +490,6 @@
             this.menuStrip1.TabIndex = 9;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // lbCanEvolveCont
-            // 
-            this.lbCanEvolveCont.AutoSize = true;
-            this.lbCanEvolveCont.Location = new System.Drawing.Point(28, 199);
-            this.lbCanEvolveCont.Name = "lbCanEvolveCont";
-            this.lbCanEvolveCont.Size = new System.Drawing.Size(61, 13);
-            this.lbCanEvolveCont.TabIndex = 6;
-            this.lbCanEvolveCont.Text = "can Evolve";
-            // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -500,20 +501,20 @@
             // openNewBotToolStripMenuItem
             // 
             this.openNewBotToolStripMenuItem.Name = "openNewBotToolStripMenuItem";
-            this.openNewBotToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openNewBotToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.openNewBotToolStripMenuItem.Text = "Open New Bot";
             this.openNewBotToolStripMenuItem.Click += new System.EventHandler(this.openNewBotToolStripMenuItem_Click_1);
             // 
             // MainMap
             // 
-            this.MainMap.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.MainMap.BackColor = System.Drawing.SystemColors.Control;
             this.MainMap.Bearing = 0F;
             this.MainMap.CanDragMap = true;
             this.MainMap.EmptyTileColor = System.Drawing.Color.Navy;
             this.MainMap.GrayScaleMode = false;
             this.MainMap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
             this.MainMap.LevelsKeepInMemmory = 5;
-            this.MainMap.Location = new System.Drawing.Point(673, 50);
+            this.MainMap.Location = new System.Drawing.Point(12, 19);
             this.MainMap.MarkersEnabled = true;
             this.MainMap.MaxZoom = 2;
             this.MainMap.MinZoom = 2;
@@ -533,12 +534,15 @@
             // 
             // groupBox6
             // 
-            this.groupBox6.Location = new System.Drawing.Point(667, 35);
+            this.groupBox6.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBox6.Controls.Add(this.MainMap);
+            this.groupBox6.Location = new System.Drawing.Point(663, 36);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(527, 561);
             this.groupBox6.TabIndex = 11;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Live Map View";
+            this.groupBox6.Enter += new System.EventHandler(this.groupBox6_Enter);
             // 
             // MainForm
             // 
@@ -546,7 +550,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1206, 608);
             this.Controls.Add(this.groupBox6);
-            this.Controls.Add(this.MainMap);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -572,6 +575,7 @@
             this.botPage1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

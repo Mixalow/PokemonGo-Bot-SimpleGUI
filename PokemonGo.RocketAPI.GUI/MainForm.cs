@@ -171,6 +171,7 @@ namespace PokemonGo.RocketAPI.GUI
             {
                 Logger.Write("Unable to Connect using the Google Token.");
                 MessageBox.Show("Unable to Authenticate with Login Server.", "Login Problem");
+                loginSelected = false;
                 Application.Exit();
             }
         }
@@ -205,6 +206,7 @@ namespace PokemonGo.RocketAPI.GUI
             {
                 Logger.Write("Unable to Connect using the PTC Credentials.");
                 MessageBox.Show("Unable to Authenticate with Login Server.", "Login Problem");
+                loginSelected = false;
                 Application.Exit();
             }
         }
@@ -862,6 +864,11 @@ namespace PokemonGo.RocketAPI.GUI
         private void openNewBotToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("PoGoBot-GUI.exe");
+        }
+
+        private void groupBox6_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }
