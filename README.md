@@ -16,29 +16,29 @@ This project is to create a simple GUI application for the Pokemon Go Rocket API
 
 # Changelog
 ## Version 0.16
-- Added Transfer Settings
+# Added Transfer Settings
 - Keep Evolvable Pokemon
 - Prioritize IV Over CP
 - Duplicates To Keep
 - Keep Minimum CP
 - Keep Minimum IV
 
-- Evolve Settings
+# Evolve Settings
 - Evolve Above CP
 - Evolve Above IV
 
-- Location Settings
+# Location Settings
 - Human Walking Mode
 - Walking Speed (KM)
 - Max Travel Distance (M)
 - Altitude
-
-- General
+ 
+# General
 - Catch Pokemon
 - Collect PokeStops
 - Auto Recycle Items
 - Auto Transfer Pokemon
-
+# Misc
 - Bug Fixes
 
 ## Version 0.15
