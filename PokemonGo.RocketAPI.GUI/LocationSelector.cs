@@ -116,7 +116,7 @@ namespace PokemonGo.RocketAPI.GUI {
 
         private void addGoodFarmingLocations() {
             comboLocations.Items.Clear();
-            var locationArray = File.ReadAllLines(@"locations.txt");
+            var locationArray = File.ReadAllLines(@"Configs/locations.txt");
             var numOfLocations = locationArray.Length;
             char[] strSplitInfo = {':'};
 
@@ -277,7 +277,7 @@ namespace PokemonGo.RocketAPI.GUI {
 
             if (!String.IsNullOrWhiteSpace(enterName.formNameTxt))
             {
-                using (StreamWriter sw = File.AppendText(@"locations.txt")) {
+                using (StreamWriter sw = File.AppendText(@"Configs/locations.txt")) {
                     sw.WriteLine(enterName.formNameTxt + ": " + lat + ": " + lng);
                 }
             }
@@ -292,7 +292,7 @@ namespace PokemonGo.RocketAPI.GUI {
         {
             string tempFile = Path.GetTempFileName();
 
-            using (var sr = new StreamReader(@"locations.txt"))
+            using (var sr = new StreamReader(@"Configs/locations.txt"))
             using (var sw = new StreamWriter(tempFile))
             {
                 string line;
@@ -306,8 +306,8 @@ namespace PokemonGo.RocketAPI.GUI {
                 }
             }
    
-            File.Delete(@"locations.txt");
-            File.Move(tempFile, @"locations.txt");
+            File.Delete(@"Configs/locations.txt");
+            File.Move(tempFile, @"Configs/locations.txt");
 
             comboLocations.Items.Remove(comboLocations.SelectedIndex);
             addGoodFarmingLocations();

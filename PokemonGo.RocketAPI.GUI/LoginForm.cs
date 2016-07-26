@@ -49,7 +49,7 @@ namespace PokemonGo.RocketAPI.GUI
         //private ToolStripMenuItem[] curMenuItems = new ToolStripMenuItem[50];
         private ToolStripMenuItem accSub = new ToolStripMenuItem("Accounts");
         private void LoadAccounts() {
-            var AccountArray = File.ReadAllLines(@"accounts.txt");
+            var AccountArray = File.ReadAllLines(@"Configs/accounts.txt");
             var numOfAccounts = AccountArray.Length;
             char[] strSplitInfo = { ':' };
 
@@ -150,7 +150,7 @@ namespace PokemonGo.RocketAPI.GUI
 
             if (!String.IsNullOrWhiteSpace(loginForm.returnStrUsr) ||
                 !String.IsNullOrWhiteSpace(loginForm.returnStrPass)) {
-                using (StreamWriter sw = File.AppendText(@"accounts.txt")) {
+                using (StreamWriter sw = File.AppendText(@"Configs/accounts.txt")) {
                     sw.WriteLine(loginForm.returnStrUsr + ": " + loginForm.returnStrPass + ": " +
                                  getLoginTypeString(loginForm.returnAccType));
                 }

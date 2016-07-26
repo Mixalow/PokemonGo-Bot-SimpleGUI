@@ -1,8 +1,11 @@
 ﻿#region
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using PokemonGo.RocketAPI;
 using PokemonGo.RocketAPI.Enums;
 using PokemonGo.RocketAPI.GeneratedCode;
 
@@ -19,21 +22,21 @@ namespace PokemonGo.RocketAPI.Logic
             _client = client;
         }
 
-        public async Task<IEnumerable<PokemonData>> GetDuplicatePokemonToTransfer(
-            bool keepPokemonsThatCanEvolve = false, IEnumerable<PokemonId> filter = null)
-        {
+        public async Task<IEnumerable<PokemonData>> GetDuplicatePokemonToTransfer(bool keepPokemonsThatCanEvolve = false, bool priortizeIVOverCP = false, IEnumerable<PokemonId> filter = null) {
             var myPokemon = await GetPokemons();
 
-            var pokemonList = myPokemon.Where(p => p.DeployedFortId == 0).ToList(); //Don't evolve pokemon in gyms
+            var pokemonList = myPokemon.Where(p => p.DeployedFortId == 0).ToList();
+            if (_client.Settings.KeepMinCP == 0 && _client.Settings.KeepMinIVPercentage == 0)
+                pokemonList = myPokemon.Where(p => p.DeployedFortId == 0).ToList(); //Don't evolve pokemon in gyms
+            else
+                pokemonList = myPokemon.Where(p => p.DeployedFortId == 0 && PokemonInfo.CalculatePokemonPerfection(p) < 100 && (p.Favorite == 0 && p.Cp < _client.Settings.KeepMinCP || PokemonInfo.CalculatePokemonPerfection(p) < _client.Settings.KeepMinIVPercentage)).ToList();
+
             if (filter != null)
-            {
                 pokemonList = pokemonList.Where(p => !filter.Contains(p.PokemonId)).ToList();
-            }
-            if (keepPokemonsThatCanEvolve)
-            {
+
+            if (keepPokemonsThatCanEvolve) {
                 var results = new List<PokemonData>();
-                var pokemonsThatCanBeTransfered = pokemonList.GroupBy(p => p.PokemonId)
-                    .Where(x => x.Count() > 2).ToList();
+                var pokemonsThatCanBeTransfered = pokemonList.GroupBy(p => p.PokemonId).Where(x => x.Count() > 2).ToList();
 
                 var myPokemonSettings = await GetPokemonSettings();
                 var pokemonSettings = myPokemonSettings.ToList();
@@ -41,35 +44,29 @@ namespace PokemonGo.RocketAPI.Logic
                 var myPokemonFamilies = await GetPokemonFamilies();
                 var pokemonFamilies = myPokemonFamilies.ToArray();
 
-                foreach (var pokemon in pokemonsThatCanBeTransfered)
-                {
+                foreach (var pokemon in pokemonsThatCanBeTransfered) {
                     var settings = pokemonSettings.Single(x => x.PokemonId == pokemon.Key);
                     var familyCandy = pokemonFamilies.Single(x => settings.FamilyId == x.FamilyId);
                     if (settings.CandyToEvolve == 0)
                         continue;
 
                     var amountToSkip = familyCandy.Candy/settings.CandyToEvolve;
-
-                    results.AddRange(pokemonList.Where(x => x.PokemonId == pokemon.Key && x.Favorite == 0)
-                        .OrderByDescending(x => x.Cp)
-                        .ThenBy(n => n.StaminaMax)
-                        .Skip(amountToSkip)
-                        .ToList());
+                    if (priortizeIVOverCP) {
+                        results.AddRange(pokemonList.Where(x => x.PokemonId == pokemon.Key).OrderByDescending(x => x.CalculateIV()).ThenBy(n => n.StaminaMax).Skip(amountToSkip).ToList());
+                    }
+                    else {
+                        results.AddRange(pokemonList.Where(x => x.PokemonId == pokemon.Key && x.Favorite == 0).OrderByDescending(x => x.Cp).ThenBy(n => n.StaminaMax).Skip(amountToSkip).ToList());
+                    }
                 }
-
                 return results;
             }
 
-            return pokemonList
-                .GroupBy(p => p.PokemonId)
-                .Where(x => x.Count() > 1)
-                .SelectMany(
-                    p =>
-                        p.Where(x => x.Favorite == 0)
-                            .OrderByDescending(x => x.Cp)
-                            .ThenBy(n => n.StaminaMax)
-                            .Skip(1)
-                            .ToList());
+            if (priortizeIVOverCP) {
+                return pokemonList.GroupBy(p => p.PokemonId).Where(x => x.Count() > 1).SelectMany(p => p.OrderByDescending(PokemonInfo.CalculatePokemonPerfection).ThenBy(n => n.StaminaMax).Skip(_client.Settings.DuplicatePokemonToKeep).ToList());
+            }
+            else {
+                return pokemonList.GroupBy(p => p.PokemonId).Where(x => x.Count() > 1).SelectMany(p => p.OrderByDescending(x => x.Cp).ThenBy(n => n.StaminaMax).Skip(_client.Settings.DuplicatePokemonToKeep).ToList());
+            }
         }
 
         public async Task<IEnumerable<PokemonData>> GetHighestsCP(int limit)
@@ -158,14 +155,12 @@ namespace PokemonGo.RocketAPI.Logic
         }
 
 
-        public async Task<IEnumerable<PokemonData>> GetPokemonToEvolve(IEnumerable<PokemonId> filter = null)
-        {
+        public async Task<IEnumerable<PokemonData>> GetPokemonToEvolve(IEnumerable<PokemonId> filter = null) {
             var myPokemons = await GetPokemons();
             myPokemons = myPokemons.Where(p => p.DeployedFortId == 0).OrderBy(p => p.Cp); //Don't evolve pokemon in gyms
             if (filter != null)
-            {
                 myPokemons = myPokemons.Where(p => filter.Contains(p.PokemonId));
-            }
+
             var pokemons = myPokemons.ToList();
 
             var myPokemonSettings = await GetPokemonSettings();
@@ -175,8 +170,7 @@ namespace PokemonGo.RocketAPI.Logic
             var pokemonFamilies = myPokemonFamilies.ToArray();
 
             var pokemonToEvolve = new List<PokemonData>();
-            foreach (var pokemon in pokemons)
-            {
+            foreach (var pokemon in pokemons) {
                 var settings = pokemonSettings.Single(x => x.PokemonId == pokemon.PokemonId);
                 var familyCandy = pokemonFamilies.Single(x => settings.FamilyId == x.FamilyId);
 
@@ -184,14 +178,18 @@ namespace PokemonGo.RocketAPI.Logic
                 if (settings.EvolutionIds.Count == 0)
                     continue;
 
-                var pokemonCandyNeededAlready =
-                    pokemonToEvolve.Count(
-                        p => pokemonSettings.Single(x => x.PokemonId == p.PokemonId).FamilyId == settings.FamilyId)*
-                    settings.CandyToEvolve;
-                if (familyCandy.Candy - pokemonCandyNeededAlready > settings.CandyToEvolve)
-                    pokemonToEvolve.Add(pokemon);
-            }
+                var pokemonCandyNeededAlready = pokemonToEvolve.Count(p => pokemonSettings.Single(x => x.PokemonId == p.PokemonId).FamilyId == settings.FamilyId)*settings.CandyToEvolve;
 
+                if (_client.Settings.EvolveAboveIvValue != 0 || _client.Settings.EvolveAboveCp != 0) {
+                    if (PokemonInfo.CalculatePokemonPerfection(pokemon) < 100 && (pokemon.Favorite == 0 && pokemon.Cp >= _client.Settings.EvolveAboveCp || PokemonInfo.CalculatePokemonPerfection(pokemon) >= _client.Settings.EvolveAboveIvValue)) {
+                        pokemonToEvolve.Add(pokemon);
+                    }
+                }
+                else {
+                    if (familyCandy.Candy - pokemonCandyNeededAlready > settings.CandyToEvolve)
+                        pokemonToEvolve.Add(pokemon);
+                }
+            }
             return pokemonToEvolve;
         }
     }

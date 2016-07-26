@@ -4,9 +4,10 @@ This project is to create a simple GUI application for the Pokemon Go Rocket API
 
 <details>
   <summary>Screenshots</summary>
-  ![Application Demo](http://i.imgur.com/TsoARNO.png)
+  ![Application Demo](http://i.imgur.com/O8uxUwX.png)
+  ![Application Demo](http://i.imgur.com/O8uxUwX.png)
   ![Application Demo](http://i.imgur.com/dKZMpKG.png)
-  ![Application Demo](http://i.imgur.com/aHa5U80.png)
+  ![Application Demo](http://i.imgur.com/A5m7seT.png)
 </details>
 
 # How to Use
@@ -14,6 +15,32 @@ This project is to create a simple GUI application for the Pokemon Go Rocket API
 - Download the [Latest Release](https://github.com/SharkNGU/PokemonGo-Bot-SimpleGUI/releases)
 
 # Changelog
+## Version 0.16
+- Added Transfer Settings
+- Keep Evolvable Pokemon
+- Prioritize IV Over CP
+- Duplicates To Keep
+- Keep Minimum CP
+- Keep Minimum IV
+
+- Evolve Settings
+- Evolve Above CP
+- Evolve Above IV
+
+- Location Settings
+- Human Walking Mode
+- Walking Speed (KM)
+- Max Travel Distance (M)
+- Altitude
+
+- General
+- Catch Pokemon
+- Collect PokeStops
+- Auto Recycle Items
+- Auto Transfer Pokemon
+
+- Bug Fixes
+
 ## Version 0.15
 - Added Option To Disable Pokemon Catching (PokeStop Farm Bot)
 - Added Option To Disable PokeStop Looting (Pokemon Farm Bot)

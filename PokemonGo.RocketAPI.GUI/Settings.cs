@@ -20,10 +20,21 @@ namespace PokemonGo.RocketAPI.GUI
         public string PtcPassword => UserSettings.Default.PtcPassword;
         public double DefaultLatitude => UserSettings.Default.DefaultLatitude;
         public double DefaultLongitude => UserSettings.Default.DefaultLongitude;
-        public double DefaultAltitude => UserSettings.Default.DefaultAltitude;
+        public double DefaultAltitude {
+            get { return UserSettings.Default.DefaultAltitude; }
+            set { UserSettings.Default.DefaultAltitude = value; }
+        }
+
         public float KeepMinIVPercentage => UserSettings.Default.KeepMinIVPercentage;
         public int KeepMinCP => UserSettings.Default.KeepMinCP;
-        public double WalkingSpeedInKilometerPerHour => UserSettings.Default.WalkingSpeedInKilometerPerHour;
+        public int EvolveAboveIvValue => UserSettings.Default.evolveAboveIvValue;
+        public int DuplicatePokemonToKeep => UserSettings.Default.duplicatePokemonToKeep ;
+        public int EvolveAboveCp => UserSettings.Default.evolveAboveCp;
+        public double WalkingSpeedInKilometerPerHour {
+            get { return UserSettings.Default.WalkingSpeedInKilometerPerHour; }
+            set { UserSettings.Default.WalkingSpeedInKilometerPerHour = value; }
+        }
+
         public bool EvolveAllPokemonWithEnoughCandy => UserSettings.Default.EvolveAllPokemonWithEnoughCandy;
         public bool TransferDuplicatePokemon => UserSettings.Default.TransferDuplicatePokemon;
         public int DelayBetweenMove => UserSettings.Default.DelayBetweenMove;

@@ -13,17 +13,21 @@ namespace PokemonGo.RocketAPI
         AuthType AuthType { get; }
         double DefaultLatitude { get; }
         double DefaultLongitude { get; }
-        double DefaultAltitude { get; }
+        double DefaultAltitude { get; set; }
         string GoogleRefreshToken { get; set; }
         string PtcPassword { get; }
         string PtcUsername { get; }
         float KeepMinIVPercentage { get; }
         int KeepMinCP { get; }
-        double WalkingSpeedInKilometerPerHour { get; }
+        double WalkingSpeedInKilometerPerHour { get; set; }
         bool EvolveAllPokemonWithEnoughCandy { get; }
         bool TransferDuplicatePokemon { get; }
         int DelayBetweenMove { get; }
         bool UsePokemonToNotCatchFilter { get; }
+        int EvolveAboveIvValue { get; }
+        int DuplicatePokemonToKeep { get; }
+        int EvolveAboveCp { get; }
+
         ICollection<KeyValuePair<ItemId, int>> ItemRecycleFilter { get; }
 
         ICollection<PokemonId> PokemonsToEvolve { get; }

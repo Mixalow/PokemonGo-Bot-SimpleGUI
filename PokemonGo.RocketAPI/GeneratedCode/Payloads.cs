@@ -4,6 +4,7 @@
 
 #region
 
+using System;
 using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
@@ -9896,6 +9897,11 @@ namespace PokemonGo.RocketAPI.GeneratedCode
             nickname_ = other.nickname_;
             fromFort_ = other.fromFort_;
         }
+
+        public double CalculateIV()
+        {
+            return ((double)(IndividualAttack + IndividualDefense + IndividualStamina) / (3.0f * 15.0f)) * 100.0f;
+        }    
 
         public static pb::MessageParser<PokemonData> Parser
         {

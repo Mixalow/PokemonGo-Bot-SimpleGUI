@@ -2,6 +2,9 @@
 
 using System;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using GMap.NET;
+using GMap.NET.WindowsForms;
 using PokemonGo.RocketAPI.GeneratedCode;
 using PokemonGo.RocketAPI.Logic.Utils;
 
@@ -31,14 +34,13 @@ namespace PokemonGo.RocketAPI.Logic
             return d;
         }
 
-        public async Task<PlayerUpdateResponse> HumanLikeWalking(Location targetLocation,
-            double walkingSpeedInKilometersPerHour, Func<Task> functionExecutedWhileWalking)
+        public async Task<PlayerUpdateResponse> HumanLikeWalking(Location targetLocation, double walkingSpeedInKilometersPerHour, Func<Task> functionExecutedWhileWalking, GMapControl map)
         {
             var speedInMetersPerSecond = walkingSpeedInKilometersPerHour/3.6;
 
             var sourceLocation = new Location(_client.CurrentLat, _client.CurrentLng);
             var distanceToTarget = LocationUtils.CalculateDistanceInMeters(sourceLocation, targetLocation);
-            // Logger.Write($"Distance to target location: {distanceToTarget:0.##} meters. Will take {distanceToTarget/speedInMetersPerSecond:0.##} seconds!", LogLevel.Info);
+            Logger.Write($"Distance to target location: {distanceToTarget:0.##} meters. Will take {distanceToTarget/speedInMetersPerSecond:0.##} seconds!", LogLevel.Info);
 
             var nextWaypointBearing = LocationUtils.DegreeBearing(sourceLocation, targetLocation);
             var nextWaypointDistance = speedInMetersPerSecond;
@@ -58,6 +60,7 @@ namespace PokemonGo.RocketAPI.Logic
                     (DateTime.Now - requestSendDateTime).TotalMilliseconds;
 
                 sourceLocation = new Location(_client.CurrentLat, _client.CurrentLng);
+                map.Position = new PointLatLng(_client.CurrentLat, _client.CurrentLng);
                 var currentDistanceToTarget = LocationUtils.CalculateDistanceInMeters(sourceLocation, targetLocation);
 
                 if (currentDistanceToTarget < 40)
@@ -80,6 +83,7 @@ namespace PokemonGo.RocketAPI.Logic
                         _client.UpdatePlayerLocation(waypoint.Latitude, waypoint.Longitude,
                             _client.Settings.DefaultAltitude);
                 await Task.Delay(Math.Min((int) (distanceToTarget/speedInMetersPerSecond*1000), 3000));
+
             } while (LocationUtils.CalculateDistanceInMeters(sourceLocation, targetLocation) >= 30);
 
             return result;

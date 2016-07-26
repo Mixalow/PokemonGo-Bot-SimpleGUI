@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Device.Location;
 using static PokemonGo.RocketAPI.Logic.Navigation;
 
 #endregion
@@ -28,8 +29,15 @@ namespace PokemonGo.RocketAPI.Logic.Utils
             return dist;
         }
 
+        public static double CalculateDistanceInMeters1(double sourceLat, double sourceLng, double destLat, double destLng)
+        {
+            var sourceLocation = new GeoCoordinate(sourceLat, sourceLng);
+            var targetLocation = new GeoCoordinate(destLat, destLng);
+
+            return sourceLocation.GetDistanceTo(targetLocation);
+        }
+
         public static Location CreateWaypoint(Location sourceLocation, double distanceInMeters, double bearingDegrees)
-            //from http://stackoverflow.com/a/17545955
         {
             var distanceKm = distanceInMeters/1000.0;
             var distanceRadians = distanceKm/6371; //6371 = Earth's radius in km
