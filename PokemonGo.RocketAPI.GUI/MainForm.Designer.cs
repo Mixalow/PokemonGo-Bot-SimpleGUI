@@ -220,7 +220,7 @@
             // btnStopFarming
             // 
             this.btnStopFarming.Enabled = false;
-            this.btnStopFarming.Location = new System.Drawing.Point(6, 19);
+            this.btnStopFarming.Location = new System.Drawing.Point(6, 71);
             this.btnStopFarming.Name = "btnStopFarming";
             this.btnStopFarming.Size = new System.Drawing.Size(144, 46);
             this.btnStopFarming.TabIndex = 1;
@@ -230,7 +230,7 @@
             // 
             // btnStartFarming
             // 
-            this.btnStartFarming.Location = new System.Drawing.Point(6, 71);
+            this.btnStartFarming.Location = new System.Drawing.Point(6, 19);
             this.btnStartFarming.Name = "btnStartFarming";
             this.btnStartFarming.Size = new System.Drawing.Size(144, 46);
             this.btnStartFarming.TabIndex = 0;
