@@ -28,8 +28,15 @@ namespace PokemonGo.RocketAPI.Logic
             var pokemonList = myPokemon.Where(p => p.DeployedFortId == 0).ToList();
             if (_client.Settings.KeepMinCP == 0 && _client.Settings.KeepMinIVPercentage == 0)
                 pokemonList = myPokemon.Where(p => p.DeployedFortId == 0).ToList(); //Don't evolve pokemon in gyms
-            else
-                pokemonList = myPokemon.Where(p => p.DeployedFortId == 0 && PokemonInfo.CalculatePokemonPerfection(p) < 100 && (p.Favorite == 0 && p.Cp < _client.Settings.KeepMinCP || PokemonInfo.CalculatePokemonPerfection(p) < _client.Settings.KeepMinIVPercentage)).ToList();
+            else {
+                int tmpCp = _client.Settings.KeepMinCP;
+                int tmpIv = (int)_client.Settings.KeepMinIVPercentage;
+                if (_client.Settings.KeepMinCP == 0)
+                    tmpCp = 1000000;
+                if (_client.Settings.KeepMinIVPercentage == 0)
+                    tmpIv = 1000000;
+                pokemonList = myPokemon.Where(p => p.DeployedFortId == 0 && PokemonInfo.CalculatePokemonPerfection(p) < 100 && (p.Favorite == 0 && p.Cp < tmpCp && PokemonInfo.CalculatePokemonPerfection(p) < tmpIv)).ToList();
+            }
 
             if (filter != null)
                 pokemonList = pokemonList.Where(p => !filter.Contains(p.PokemonId)).ToList();
@@ -181,7 +188,14 @@ namespace PokemonGo.RocketAPI.Logic
                 var pokemonCandyNeededAlready = pokemonToEvolve.Count(p => pokemonSettings.Single(x => x.PokemonId == p.PokemonId).FamilyId == settings.FamilyId)*settings.CandyToEvolve;
 
                 if (_client.Settings.EvolveAboveIvValue != 0 || _client.Settings.EvolveAboveCp != 0) {
-                    if (PokemonInfo.CalculatePokemonPerfection(pokemon) < 100 && (pokemon.Favorite == 0 && pokemon.Cp >= _client.Settings.EvolveAboveCp || PokemonInfo.CalculatePokemonPerfection(pokemon) >= _client.Settings.EvolveAboveIvValue)) {
+                    int tmpCp = _client.Settings.EvolveAboveCp;
+                    int tmpIv = (int)_client.Settings.EvolveAboveIvValue;
+                    if (_client.Settings.KeepMinCP == 0)
+                        tmpCp = 1000000;
+                    if (_client.Settings.KeepMinIVPercentage == 0)
+                        tmpIv = 1000000;
+
+                    if (PokemonInfo.CalculatePokemonPerfection(pokemon) < 100 && (pokemon.Favorite == 0 && pokemon.Cp >= tmpCp && PokemonInfo.CalculatePokemonPerfection(pokemon) >= tmpIv)) {
                         pokemonToEvolve.Add(pokemon);
                     }
                 }
